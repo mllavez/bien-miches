@@ -4,6 +4,8 @@ import {
   type LoaderArgs,
   type AppLoadContext,
 } from '@shopify/remix-oxygen';
+import '@radix-ui/themes/styles.css';
+import {Theme} from '@radix-ui/themes';
 import {
   isRouteErrorResponse,
   Links,
@@ -18,8 +20,6 @@ import {
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import {ShopifySalesChannel, Seo} from '@shopify/hydrogen';
-import '@radix-ui/themes/styles.css';
-import {Theme} from '@radix-ui/themes';
 import invariant from 'tiny-invariant';
 
 import {Layout} from '~/components';
