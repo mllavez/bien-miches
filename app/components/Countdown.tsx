@@ -14,24 +14,21 @@ const ShowCounter = ({
   seconds: number;
 }) => {
   return (
-    <div className="show-counter">
+    <div className="show-counter grid grid-cols-4">
       <>
-        <p>{days}</p>
+        <p className="font-native text-5xl">{days}</p>
         <span>Days</span>
       </>
-      <p>:</p>
       <>
-        <p>{hours}</p>
+        <p className="font-native text-5xl">{hours}</p>
         <span>Hours</span>
       </>
-      <p>:</p>
       <>
-        <p>{minutes}</p>
+        <p className="font-native text-5xl">{minutes}</p>
         <span>Mins</span>
       </>
-      <p>:</p>
       <>
-        <p>{seconds}</p>
+        <p className="font-native text-5xl">{seconds}</p>
         <span>Seconds</span>
       </>
     </div>
