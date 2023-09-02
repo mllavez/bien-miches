@@ -14,7 +14,7 @@ const ShowCounter = ({
   seconds: number;
 }) => {
   return (
-    <div className="show-counter grid grid-cols-4 justify-between w-screen max-w-sm py-4">
+    <div className="show-counter grid grid-cols-4 justify-between max-w-sm pt-10 pb-4">
       <div className="flex flex-col justify-center">
         <p className="font-spooky text-5xl text-center">{days}</p>
         <span className="text-center font-native">Days</span>

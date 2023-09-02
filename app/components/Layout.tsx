@@ -186,7 +186,7 @@ function MobileHeader({
   return (
     <header
       role="banner"
-      className={`flex lg:hidden items-center h-16 absolute z-40 top-0 justify-center w-full leading-none gap-4 px-4 md:px-8`}
+      className={`flex md:hidden items-center h-24 absolute z-40 top-0 justify-center w-full leading-none gap-4 px-4 md:px-8`}
     >
       <Link
         className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center align-middle flex-grow w-full h-full"
@@ -201,13 +201,21 @@ function MobileHeader({
           text-transparent
           bg-gradient-to-r
           from-emerald-800
+          from-20%
           via-emerald-800
+          via-31%
           via-white
+          via-33%
+          via-white
+          via-65%
           via-rose-700
+          via-71%
           to-rose-700
+          to-80%
           font-spooky
-          text-xl
-          uppercase"
+          text-4xl
+          uppercase
+          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.9)]"
           as={isHome ? 'h1' : 'h2'}
         >
           {title}
@@ -233,21 +241,33 @@ function DesktopHeader({
   return (
     <header
       role="banner"
-      className="hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-center w-full leading-none gap-8 px-12 py-8 h-20"
+      className="hidden h-nav md:flex items-center absolute transition duration-300 z-40 top-0 justify-center w-full leading-none gap-8 px-12 py-8 h-20"
     >
       <div className="flex justify-center">
         <Link
-          className="font-extrabold
+          className="font-bold
+          text-center
+          leading-none
+          font-extrabold
           bg-clip-text
           text-transparent
           bg-gradient-to-r
           from-emerald-800
+          from-20%
           via-emerald-800
+          via-31%
           via-white
+          via-33%
           via-white
+          via-65%
           via-rose-700
+          via-71%
           to-rose-700
-          "
+          to-80%
+          font-spooky
+          text-4xl
+          uppercase
+          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.9)]"
           to="/"
           prefetch="intent"
         >
@@ -355,11 +375,11 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       divider={isHome ? 'none' : 'top'}
       as="footer"
       role="contentinfo"
-      className={`grid items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-        bg-contrast dark:bg-contrast dark:text-primary text-contrast overflow-hidden text-white`}
+      className={`flex justify-center w-full gap-6 py-8 px-6 md:gap-5 md:py-6 md:px-5 
+        bg-black dark:text-primary text-contrast overflow-hidden text-white `}
     >
-      <div className={`flex flex-col gap-[1rem] pt-8 text-center`}>
-        <div>
+      <div className={`flex flex-col gap-[1rem] text-center`}>
+        <div className="text-xl">
           &copy;{' '}
           <span
             className="font-bold
@@ -370,13 +390,21 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
           text-transparent
           bg-gradient-to-r
           from-emerald-800
+          from-20%
           via-emerald-800
+          via-31%
           via-white
+          via-33%
+          via-white
+          via-65%
           via-rose-700
+          via-71%
           to-rose-700
+          to-80%
           font-spooky
-          text-xl
-          uppercase"
+          text-2xl
+          uppercase
+          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.9)]"
           >
             BIEN MICHES
           </span>{' '}
@@ -386,7 +414,7 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
           text-center
           leading-none
           font-extrabold
-          text-xl"
+          text-2xl"
           >
             {new Date().getFullYear()}{' '}
           </span>

@@ -118,17 +118,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Theme>
-          <Layout
-            key={`${locale.language}-${locale.country}`}
-            layout={data.layout}
-          >
-            <Outlet />
-          </Layout>
-          <ScrollRestoration />
-          <Scripts />
-          <LiveReload />
-        </Theme>
+        <Layout
+          key={`${locale.language}-${locale.country}`}
+          layout={data.layout}
+        >
+          <Outlet />
+        </Layout>
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
       </body>
     </html>
   );
