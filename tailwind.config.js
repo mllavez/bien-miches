@@ -63,6 +63,12 @@ export default {
       backgroundImage: {
         'first-hero-img': "url('public/bien-miche-michelada-mix-hero-bg.jpg')",
       },
+      container: {
+        center: true,
+        padding: {
+          DEDAULT: '1.5rem',
+        },
+      },
     },
   },
   plugins: [formsPlugin, typographyPlugin],

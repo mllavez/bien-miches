@@ -14,23 +14,23 @@ const ShowCounter = ({
   seconds: number;
 }) => {
   return (
-    <div className="show-counter grid grid-cols-4">
-      <>
-        <p className="font-native text-5xl">{days}</p>
-        <span>Days</span>
-      </>
-      <>
-        <p className="font-native text-5xl">{hours}</p>
-        <span>Hours</span>
-      </>
-      <>
-        <p className="font-native text-5xl">{minutes}</p>
-        <span>Mins</span>
-      </>
-      <>
-        <p className="font-native text-5xl">{seconds}</p>
-        <span>Seconds</span>
-      </>
+    <div className="show-counter grid grid-cols-4 justify-between w-screen max-w-sm py-4">
+      <div className="flex flex-col justify-center">
+        <p className="font-spooky text-5xl text-center">{days}</p>
+        <span className="text-center font-native">Days</span>
+      </div>
+      <div className="flex flex-col justify-center">
+        <p className="font-spooky text-5xl text-center">{hours}</p>
+        <span className="text-center font-native">Hours</span>
+      </div>
+      <div className="flex flex-col justify-center text-center">
+        <p className="font-spooky text-5xl text-center">{minutes}</p>
+        <span className="text-center font-native">Mins</span>
+      </div>
+      <div className="flex flex-col justify-center">
+        <p className="font-spooky text-5xl text-center">{seconds}</p>
+        <span className="text-center font-native">Seconds</span>
+      </div>
     </div>
   );
 };

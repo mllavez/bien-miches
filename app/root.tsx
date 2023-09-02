@@ -25,7 +25,7 @@ import invariant from 'tiny-invariant';
 import {Layout} from '~/components';
 import {seoPayload} from '~/lib/seo.server';
 
-import favicon from '../public/favicon.svg';
+import favicon from '../public/favicon.ico';
 
 import {GenericError} from './components/GenericError';
 import {NotFound} from './components/NotFound';

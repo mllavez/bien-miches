@@ -186,60 +186,33 @@ function MobileHeader({
   return (
     <header
       role="banner"
-      className={`${
-        isHome
-          ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-          : 'bg-contrast/80 text-primary'
-      } flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8`}
+      className={`flex lg:hidden items-center h-16 absolute z-40 top-0 justify-center w-full leading-none gap-4 px-4 md:px-8`}
     >
-      <div className="flex items-center justify-start w-full gap-4">
-        <button
-          onClick={openMenu}
-          className="relative flex items-center justify-center w-8 h-8"
-        >
-          <IconMenu />
-        </button>
-        <Form
-          method="get"
-          action={params.locale ? `/${params.locale}/search` : '/search'}
-          className="items-center gap-2 sm:flex"
-        >
-          <button
-            type="submit"
-            className="relative flex items-center justify-center w-8 h-8"
-          >
-            <IconSearch />
-          </button>
-          <Input
-            className={
-              isHome
-                ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                : 'focus:border-primary/20'
-            }
-            type="search"
-            variant="minisearch"
-            placeholder="Search"
-            name="q"
-          />
-        </Form>
-      </div>
-
       <Link
-        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
-        to="/"
+        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center align-middle flex-grow w-full h-full"
+        to="https://www.instagram.com/bienmiches/"
       >
         <Heading
-          className="font-bold text-center leading-none"
+          className="font-bold
+          text-center
+          leading-none
+          font-extrabold
+          bg-clip-text
+          text-transparent
+          bg-gradient-to-r
+          from-emerald-800
+          via-emerald-800
+          via-white
+          via-rose-700
+          to-rose-700
+          font-spooky
+          text-xl
+          uppercase"
           as={isHome ? 'h1' : 'h2'}
         >
           {title}
         </Heading>
       </Link>
-
-      <div className="flex items-center justify-end w-full gap-4">
-        <AccountLink className="relative flex items-center justify-center w-8 h-8" />
-        <CartCount isHome={isHome} openCart={openCart} />
-      </div>
     </header>
   );
 }
@@ -260,61 +233,26 @@ function DesktopHeader({
   return (
     <header
       role="banner"
-      className={`${
-        isHome
-          ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-          : 'bg-contrast/80 text-primary'
-      } ${
-        !isHome && y > 50 && ' shadow-lightHeader'
-      } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
+      className="hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-center w-full leading-none gap-8 px-12 py-8 h-20"
     >
-      <div className="flex gap-12">
-        <Link className="font-bold" to="/" prefetch="intent">
+      <div className="flex justify-center">
+        <Link
+          className="font-extrabold
+          bg-clip-text
+          text-transparent
+          bg-gradient-to-r
+          from-emerald-800
+          via-emerald-800
+          via-white
+          via-white
+          via-rose-700
+          to-rose-700
+          "
+          to="/"
+          prefetch="intent"
+        >
           {title}
         </Link>
-        <nav className="flex gap-8">
-          {/* Top level menu items */}
-          {(menu?.items || []).map((item) => (
-            <Link
-              key={item.id}
-              to={item.to}
-              target={item.target}
-              prefetch="intent"
-              className={({isActive}) =>
-                isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
-              }
-            >
-              {item.title}
-            </Link>
-          ))}
-        </nav>
-      </div>
-      <div className="flex items-center gap-1">
-        <Form
-          method="get"
-          action={params.locale ? `/${params.locale}/search` : '/search'}
-          className="flex items-center gap-2"
-        >
-          <Input
-            className={
-              isHome
-                ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                : 'focus:border-primary/20'
-            }
-            type="search"
-            variant="minisearch"
-            placeholder="Search"
-            name="q"
-          />
-          <button
-            type="submit"
-            className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
-          >
-            <IconSearch />
-          </button>
-        </Form>
-        <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
-        <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
   );
@@ -417,16 +355,45 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       divider={isHome ? 'none' : 'top'}
       as="footer"
       role="contentinfo"
-      className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-        bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
+      className={`grid items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
+        bg-contrast dark:bg-contrast dark:text-primary text-contrast overflow-hidden text-white`}
     >
-      <FooterMenu menu={menu} />
-      <CountrySelector />
-      <div
-        className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-${itemsCount}`}
-      >
-        &copy; {new Date().getFullYear()} / Shopify, Inc. Hydrogen is an MIT
-        Licensed Open Source project.
+      <div className={`flex flex-col gap-[1rem] pt-8 text-center`}>
+        <div>
+          &copy;{' '}
+          <span
+            className="font-bold
+          text-center
+          leading-none
+          font-extrabold
+          bg-clip-text
+          text-transparent
+          bg-gradient-to-r
+          from-emerald-800
+          via-emerald-800
+          via-white
+          via-rose-700
+          to-rose-700
+          font-spooky
+          text-xl
+          uppercase"
+          >
+            BIEN MICHES
+          </span>{' '}
+          <span
+            className="font-spooky
+          font-bold
+          text-center
+          leading-none
+          font-extrabold
+          text-xl"
+          >
+            {new Date().getFullYear()}{' '}
+          </span>
+        </div>
+        <span className="text-xs opacity-40">
+          Proudly using Shopify. Built with Hydrogen
+        </span>
       </div>
     </Section>
   );
