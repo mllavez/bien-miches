@@ -12,6 +12,10 @@ img {
   border-radius: 4px;
 }
 
+body {
+  background: var(--color-dark);
+}
+
 /*
 * --------------------------------------------------
 * components/Aside
@@ -27,11 +31,12 @@ aside {
   right: calc(-1 * var(--aside-width));
   top: 0;
   transition: transform 200ms ease-in-out;
+  background: var(--color-dark);
 }
 
 aside header {
   align-items: center;
-  border-bottom: 1px solid var(--color-dark);
+  border-bottom: 1px solid var(--color-light);
   display: flex;
   height: var(--header-height);
   justify-content: space-between;
@@ -39,10 +44,12 @@ aside header {
 }
 
 aside header h3 {
+  color: var(--color-light);
   margin: 0;
 }
 
 aside header .close {
+  color: var(--color-light);
   font-weight: bold;
   opacity: 0.8;
   text-decoration: none;
@@ -129,7 +136,7 @@ aside li {
 */
 .header {
   align-items: center;
-  background: #fff;
+  background: var(--color-dark);
   display: flex;
   height: var(--header-height);
   padding: 0 1rem;
@@ -169,6 +176,9 @@ aside li {
   display: flex;
   grid-gap: 1rem;
   margin-left: auto;
+}
+.header-menu-mobile-toggle {
+  color: #fff;
 }
 
 /*

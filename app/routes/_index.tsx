@@ -29,9 +29,52 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
+      <PreFeaturedCollection />
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
+  );
+}
+
+function PreFeaturedCollection({}: {}) {
+  return (
+    <>
+      <section className="flex pt-12 pb-9 bg-black flex-col justify-center items-center gap-5">
+        <img src="https://cdn.shopify.com/s/files/1/0814/6478/7227/files/Screenshot_2023-08-23_at_1.02_1.png?v=1695306779" />
+        <div className="flex-section flex-col justify-start items-center gap-4 ">
+          <div className="self-stretch text-white text-3xl font-normal font-['Denk One']">
+            Pour. Mix. Enjoy. <br />
+            Simple.
+          </div>
+          <div className="self-stretch text-white text-xl font-normal font-['Denk One']">
+            No Prep; Authentic Flavor
+          </div>
+          <div className="self-stretch text-white text-xl font-normal font-['Denk One']">
+            Recipe from Juan Cosalá, México; to you.
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 pt-5 max-w-sm">
+          <div className="self-stretch px-10 py-3 bg-orange-400 rounded-lg justify-center items-center gap-2.5 inline-flex">
+            <div className="text-neutral-700 text-xl font-normal font-['Denk One']">
+              SHOP ONLINE
+            </div>
+          </div>
+          <div className="self-strech px-10 py-3 bg-red-700 rounded-lg justify-center items-center gap-2.5 inline-flex">
+            <div className="text-white text-xl font-normal font-['Denk One']">
+              DIRECTIONS
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="flex flex-col items-center bg-amber-700 py-6 gap-4">
+        <div className="w-72 text-center text-white text-3xl font-normal font-['Denk One']">
+          LATEST
+        </div>
+        <div className="w-72 text-center text-white text-xl font-normal font-['Denk One']">
+          Stay Party-Ready with Our Freshest Michelada Gear.
+        </div>
+      </section>
+    </>
   );
 }
 
