@@ -30,7 +30,6 @@ export default function Homepage() {
   return (
     <div className="home">
       <PreFeaturedCollection />
-      <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -54,24 +53,22 @@ function PreFeaturedCollection({}: {}) {
           </div>
         </div>
         <div className="flex flex-col gap-4 pt-5 max-w-sm">
-          <div className="self-stretch px-10 py-3 bg-orange-400 rounded-lg justify-center items-center gap-2.5 inline-flex">
+          <Link
+            to="/products/bien-miches-michelada-mix"
+            className="self-stretch px-10 py-3 bg-orange-400 rounded-lg border-2 border-neutral-700 justify-center items-center gap-2.5 inline-flex"
+          >
             <div className="text-neutral-700 text-xl font-normal font-['Denk One']">
               SHOP ONLINE
             </div>
-          </div>
-          <div className="self-strech px-10 py-3 bg-red-700 rounded-lg justify-center items-center gap-2.5 inline-flex">
+          </Link>
+          <Link
+            to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
+            className="self-strech px-10 py-3 bg-red-700 rounded-lg border-2 border-neutral-700 justify-center items-center gap-2.5 inline-flex"
+          >
             <div className="text-white text-xl font-normal font-['Denk One']">
               DIRECTIONS
             </div>
-          </div>
-        </div>
-      </section>
-      <section className="flex flex-col items-center bg-amber-700 py-6 gap-4">
-        <div className="w-72 text-center text-white text-3xl font-normal font-['Denk One']">
-          LATEST
-        </div>
-        <div className="w-72 text-center text-white text-xl font-normal font-['Denk One']">
-          Stay Party-Ready with Our Freshest Michelada Gear.
+          </Link>
         </div>
       </section>
     </>
@@ -105,8 +102,13 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery>;
 }) {
   return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
+    <section className="recommended-products flex flex-col items-center bg-amber-700 py-6 gap-4">
+      <h2 className="w-72 text-center text-white text-3xl font-normal font-['Denk One']">
+        Latest
+      </h2>
+      <h3 className="w-72 text-center text-white text-xl font-normal font-['Denk One']">
+        Stay Party-Ready with Our Freshest Michelada Gear.
+      </h3>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {({products}) => (
@@ -119,7 +121,7 @@ function RecommendedProducts({
                 >
                   <Image
                     data={product.images.nodes[0]}
-                    aspectRatio="1/1"
+                    aspectRatio="102/125"
                     sizes="(min-width: 45em) 20vw, 50vw"
                   />
                   <h4>{product.title}</h4>
@@ -133,7 +135,7 @@ function RecommendedProducts({
         </Await>
       </Suspense>
       <br />
-    </div>
+    </section>
   );
 }
 

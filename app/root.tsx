@@ -53,6 +53,15 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
+    {
+      rel: 'preconnect',
+      href: 'https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TdNuBs',
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Denk+One&family=Skranji:wght@700&display=swap',
+    },
+
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 }
