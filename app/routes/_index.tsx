@@ -13,7 +13,7 @@ import type {
 } from 'storefrontapi.generated';
 
 export const meta: V2_MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Bien Miches Micheladas, Santa Cruz CA | Home'}];
 };
 
 export async function loader({context}: LoaderArgs) {
