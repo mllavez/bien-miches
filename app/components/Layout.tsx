@@ -1,4 +1,4 @@
-import {Await} from '@remix-run/react';
+import {Await, Link} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {
   CartApiQueryFragment,
@@ -13,6 +13,8 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search';
+import MaxWidthWrapper from './MaxWidthWrapper';
+import {MapPin} from 'lucide-react';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -35,6 +37,12 @@ export function Layout({
       <SearchAside />
       <MobileMenuAside menu={header.menu} />
       <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      <MaxWidthWrapper>
+        <Link to="" className="flex px-4 py-3 w-full">
+          <MapPin className="mr-5" /> In Santa Cruz? Pick some up at Get Faded
+          Barbershop!
+        </Link>
+      </MaxWidthWrapper>
       <main>{children}</main>
       <Suspense>
         <Await resolve={footer}>

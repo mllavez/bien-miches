@@ -1,6 +1,8 @@
 import {Await, NavLink, useMatches} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {LayoutProps} from './Layout';
+import {Menu} from 'lucide-react';
+import MaxWidthWrapper from './MaxWidthWrapper';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -10,11 +12,14 @@ export function Header({header, isLoggedIn, cart}: HeaderProps) {
   const {shop, menu} = header;
   return (
     <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu menu={menu} viewport="desktop" />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      <HeaderMenuMobileToggle />
+      <MaxWidthWrapper>
+        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+          <strong>{shop.name}</strong>
+        </NavLink>
+        <HeaderMenu menu={menu} viewport="desktop" />
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </MaxWidthWrapper>
     </header>
   );
 }
@@ -38,7 +43,7 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className={className} role="navigation">
+    <nav className="hidden md:flex md:gap-4 md:ml-12" role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
@@ -83,11 +88,10 @@ function HeaderCtas({
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
     <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
       </NavLink>
-      <SearchToggle />
+      {/*<SearchToggle />*/}
       <CartToggle cart={cart} />
     </nav>
   );
@@ -95,8 +99,13 @@ function HeaderCtas({
 
 function HeaderMenuMobileToggle() {
   return (
-    <a className="header-menu-mobile-toggle" href="#mobile-menu-aside">
-      <h3>☰</h3>
+    <a
+      className="header-menu-mobile-toggle flex justify-center md:hidden w-12 "
+      href="#mobile-menu-aside"
+    >
+      <span className="">
+        <Menu className="h-7 w-7" />
+      </span>
     </a>
   );
 }

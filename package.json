@@ -18,11 +18,14 @@
     "@shopify/cli-hydrogen": "^5.2.3",
     "@shopify/hydrogen": "^2023.7.7",
     "@shopify/remix-oxygen": "^1.1.4",
+    "clsx": "^2.0.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^3.6.6",
+    "lucide-react": "^0.279.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
     "@remix-run/dev": "1.19.1",
