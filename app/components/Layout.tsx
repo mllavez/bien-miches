@@ -1,4 +1,4 @@
-import {Await, Link} from '@remix-run/react';
+import {Await, Link, useLocation} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {
   CartApiQueryFragment,
@@ -14,7 +14,8 @@ import {
   PredictiveSearchResults,
 } from '~/components/Search';
 import MaxWidthWrapper from './MaxWidthWrapper';
-import {MapPin} from 'lucide-react';
+import {MapPin, ChevronDown} from 'lucide-react';
+import {Logo} from '~/components/Logo';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -31,17 +32,43 @@ export function Layout({
   header,
   isLoggedIn,
 }: LayoutProps) {
+  const location = useLocation();
+  if (location.pathname !== '/account/login') {
+    return (
+      <>
+        <CartAside cart={cart} />
+        <SearchAside />
+        <MobileMenuAside menu={header.menu} />
+        <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+        <MaxWidthWrapper className="bg-neutral-800 md:hidden">
+          <Link
+            to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
+            className="flex px-4 py-3 w-full"
+          >
+            <MapPin className="flex mr-5" />
+            Pick up at Get Faded Barbershop <ChevronDown className="w-5" />
+          </Link>
+        </MaxWidthWrapper>
+        <div className="bg-neutral-800">
+          <MaxWidthWrapper className="hidden h-10 md:flex items-center">
+            <HeaderMenu menu={header.menu} viewport="desktop" />
+          </MaxWidthWrapper>
+        </div>
+        <main>{children}</main>
+        <Suspense>
+          <Await resolve={footer}>
+            {(footer) => <Footer menu={footer.menu} />}
+          </Await>
+        </Suspense>
+      </>
+    );
+  }
   return (
     <>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside menu={header.menu} />
-      <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
       <MaxWidthWrapper>
-        <Link to="" className="flex px-4 py-3 w-full">
-          <MapPin className="mr-5" /> In Santa Cruz? Pick some up at Get Faded
-          Barbershop!
-        </Link>
+        <div className="h-[47px] flex items-center px-4">
+          <Logo />
+        </div>
       </MaxWidthWrapper>
       <main>{children}</main>
       <Suspense>

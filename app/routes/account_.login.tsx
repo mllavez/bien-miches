@@ -10,6 +10,8 @@ import {
   useActionData,
   type V2_MetaFunction,
 } from '@remix-run/react';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
+import {Button} from '@/components/ui/button';
 
 type ActionResponse = {
   error: string | null;
@@ -77,55 +79,74 @@ export default function Login() {
   const error = data?.error || null;
 
   return (
-    <div className="login">
-      <h1>Sign in.</h1>
-      <Form method="POST">
-        <fieldset>
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Email address"
-            aria-label="Email address"
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Password"
-            aria-label="Password"
-            minLength={8}
-            required
-          />
-        </fieldset>
-        {error ? (
+    <MaxWidthWrapper>
+      <div className="login w-full">
+        <h1>Ximopanōltih, Bienvenidos, Welcome</h1>
+        <div id="accordion-signin-signup-page">
+          <div id="accordion-row-signin">
+            <div className="accordion-row-header py-5 pr-7 pl-20 block">
+              <input
+                className="absolute left-7 h-9 w-9 -mt-1"
+                id="signedIn"
+                type="radio"
+                name="status"
+                checked
+              />
+              <h5 className="font-bold m-auto">
+                <span className="text-xl">Sign In.</span>{' '}
+                <span className="text-base">Already a customer?</span>
+              </h5>
+            </div>
+            <Form method="POST">
+              <fieldset>
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="Email address"
+                  aria-label="Email address"
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus
+                />
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Password"
+                  aria-label="Password"
+                  minLength={8}
+                  required
+                />
+              </fieldset>
+              {error ? (
+                <p>
+                  <mark>
+                    <small>{error}</small>
+                  </mark>
+                </p>
+              ) : (
+                <br />
+              )}
+              <Button type="submit">Sign in</Button>
+            </Form>
+          </div>
+        </div>
+        <br />
+        <div>
           <p>
-            <mark>
-              <small>{error}</small>
-            </mark>
+            <Link to="/account/recover">Forgot password →</Link>
           </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit">Sign in</button>
-      </Form>
-      <br />
-      <div>
-        <p>
-          <Link to="/account/recover">Forgot password →</Link>
-        </p>
-        <p>
-          <Link to="/account/register">Register →</Link>
-        </p>
+          <p>
+            <Link to="/account/register">Register →</Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </MaxWidthWrapper>
   );
 }
 

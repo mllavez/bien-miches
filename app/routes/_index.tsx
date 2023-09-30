@@ -12,6 +12,9 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 
+import bienMichesMobileBgVideo from '../../public/bien-miches-michelada-mix-santa-cruz-intro-v1-mobile.mp4';
+import bienMichesDesktopBgVideo from '../../public/bien-miches-michelada-mix-santa-cruz-intro-v1-desktop.mp4';
+
 export const meta: V2_MetaFunction = () => {
   return [{title: 'Bien Miches Micheladas, Santa Cruz CA | Home'}];
 };
@@ -29,27 +32,65 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
-      <PreFeaturedCollection />
+      <PreFeaturedCollection products={data.recommendedProducts} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
 
-function PreFeaturedCollection({}: {}) {
+function PreFeaturedCollection({
+  products,
+}: {
+  products: Promise<RecommendedProductsQuery>;
+}) {
   return (
     <>
-      <section className="flex pt-12 pb-9 bg-black flex-col justify-center items-center gap-5">
+      <div className="h-[75vw]"></div>
+      <section className="overflow-hidden">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await resolve={products}>
+            {({products}) => (
+              <div className="w-max my-1.5 ml-2 relative h-52 flex space-x-4">
+                {products.nodes.map((product) => (
+                  <Link
+                    key={product.id}
+                    className="w-[136px] h-52 bg-neutral-950 rounded float-left"
+                    to={`/products/${product.handle}`}
+                  >
+                    <div className="h-12 p-1.5">
+                      <h5 className="text-sm">{product.title}</h5>
+                    </div>
+                    <Image
+                      data={product.images.nodes[0]}
+                      aspectRatio="102/125"
+                      sizes="(max-width: 7.875em) 20vw, 50vw -top-1.5"
+                      className="w-full h-full object-cover"
+                    />
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+          src={bienMichesMobileBgVideo}
+          autoPlay
+          loop
+          muted
+        />
+      </section>
+    </>
+  );
+}
+function AfterHeroSection() {
+  return (
+    <>
+      <section className="flex pt-12 pb-9 bg-black/20 flex-col justify-center items-center gap-5">
         <img src="https://cdn.shopify.com/s/files/1/0814/6478/7227/files/Screenshot_2023-08-23_at_1.02_1.png?v=1695306779" />
-        <div className="flex-section flex-col justify-start items-center gap-4 ">
+        <div className="flex-section flex-col justify-st art items-center gap-4 ">
           <div className="self-stretch text-white text-3xl font-normal font-['Denk One']">
-            Pour. Mix. Enjoy. <br />
-            Simple.
-          </div>
-          <div className="self-stretch text-white text-xl font-normal font-['Denk One']">
-            No Prep; Authentic Flavor
-          </div>
-          <div className="self-stretch text-white text-xl font-normal font-['Denk One']">
-            Recipe from Juan Cosalá, México; to you.
+            Pour. Mix. Enjoy. Simple.
           </div>
         </div>
         <div className="flex flex-col gap-4 pt-5 max-w-sm">
@@ -58,7 +99,7 @@ function PreFeaturedCollection({}: {}) {
             className="self-stretch px-10 py-3 bg-orange-400 rounded-lg border-2 border-neutral-700 justify-center items-center gap-2.5 inline-flex"
           >
             <div className="text-neutral-700 text-xl font-normal font-['Denk One']">
-              SHOP ONLINE
+              Place an order
             </div>
           </Link>
           <Link

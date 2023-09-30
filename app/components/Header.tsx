@@ -1,7 +1,7 @@
-import {Await, NavLink, useMatches} from '@remix-run/react';
+import {Await, Link, NavLink, useMatches} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {LayoutProps} from './Layout';
-import {Menu} from 'lucide-react';
+import {ChevronDown, MapPin, Menu} from 'lucide-react';
 import MaxWidthWrapper from './MaxWidthWrapper';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
@@ -11,13 +11,24 @@ type Viewport = 'desktop' | 'mobile';
 export function Header({header, isLoggedIn, cart}: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
+    <header className="header h-[58px] md:h-14">
       <HeaderMenuMobileToggle />
       <MaxWidthWrapper>
         <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
           <strong>{shop.name}</strong>
         </NavLink>
-        <HeaderMenu menu={menu} viewport="desktop" />
+        <Link
+          to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
+          className="md:flex px-4 h-full items-end hidden"
+        >
+          <MapPin className="flex mr-1 h-5" />
+          <div className="flex flex-col items-start h-full">
+            <div className="text-sm leading-none">Order</div>
+            <div className="font-bold leading-none">
+              Pick up at Get Fadeded Barbershop
+            </div>
+          </div>
+        </Link>
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </MaxWidthWrapper>
     </header>
@@ -43,7 +54,7 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className="hidden md:flex md:gap-4 md:ml-12" role="navigation">
+    <nav className="hidden md:flex md:gap-4" role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
