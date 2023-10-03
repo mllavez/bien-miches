@@ -1,4 +1,4 @@
-import {useNonce} from '@shopify/hydrogen';
+import {Script, useNonce} from '@shopify/hydrogen';
 import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
   Links,
@@ -20,6 +20,7 @@ import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
 import {Layout} from '~/components/Layout';
 import tailwindCss from './styles/tailwind.css';
+import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
 // This is important to avoid re-fetching root queries on sub-navigations
 export const shouldRevalidate: ShouldRevalidateFunction = ({
@@ -56,21 +57,6 @@ export function links() {
     {
       rel: 'preconnect',
       href: 'https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TdNuBs',
-    },
-
-    {
-      rel: 'preconnect',
-      href: 'https://fonts.googleapis.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'fonts.gstatic.com',
-      crossOrigin: 'anonymous',
-    },
-    {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Denk+One&family=Skranji:wght@700&display=swap',
-      crossOrigin: 'anonymous',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
@@ -113,6 +99,12 @@ export async function loader({context}: LoaderArgs) {
       header: await headerPromise,
       isLoggedIn,
       publicStoreDomain,
+      judgeme: {
+        shopDomain: context.env.JUDGEME_SHOP_DOMAIN,
+        publicToken: context.env.JUDGEME_PUBLIC_TOKEN,
+        cdnHost: context.env.JUDGEME_CDN_HOST,
+        delay: 500, // optional parameter, default to 500ms
+      },
     },
     {headers},
   );
@@ -121,7 +113,12 @@ export async function loader({context}: LoaderArgs) {
 export default function App() {
   const nonce = useNonce();
   const data = useLoaderData<typeof loader>();
-
+  useJudgeme({
+    shopDomain: data.judgeme.shopDomain,
+    publicToken: data.judgeme.publicToken,
+    cdnHost: data.judgeme.cdnHost,
+    delay: data.judgeme.delay,
+  });
   return (
     <html className="dark" lang="en">
       <head>
@@ -129,6 +126,7 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        <Script src="https://cdn.judge.me" />
       </head>
       <body className="">
         <Layout {...data}>

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@judgeme/shopify-hydrogen':
+    specifier: ^2.0.0
+    version: 2.0.0(@shopify/hydrogen@2023.7.7)(graphql-tag@2.12.6)
   '@radix-ui/react-slot':
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.2.22)(react@18.2.0)
@@ -2761,6 +2764,16 @@ packages:
 
   /@jspm/core@2.0.1:
     resolution: {integrity: sha512-Lg3PnLp0QXpxwLIAuuJboLeRaIhrgJjeuh797QADg3xz8wGLugQOS5DpsE8A6i6Adgzf+bacllkKZG3J0tGfDw==}
+
+  /@judgeme/shopify-hydrogen@2.0.0(@shopify/hydrogen@2023.7.7)(graphql-tag@2.12.6):
+    resolution: {integrity: sha512-JClnmxsttvCX/YABw87WB6q33AMi8LQcIlvTdYq+48wM/HXLGLsEuzZAyYHEjHHlzNhQjZAWk4xQEivWv92b2Q==}
+    peerDependencies:
+      '@shopify/hydrogen': '>=2023.4.5'
+      graphql-tag: 2.x
+    dependencies:
+      '@shopify/hydrogen': 2023.7.7(@remix-run/react@1.19.1)(@remix-run/server-runtime@1.19.1)(@types/react@18.2.22)(react-dom@18.2.0)
+      graphql-tag: 2.12.6(graphql@16.8.1)
+    dev: false
 
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}

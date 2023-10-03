@@ -18,6 +18,9 @@ declare global {
    * Declare expected Env parameter in fetch handler.
    */
   interface Env {
+    JUDGEME_CDN_HOST: any;
+    JUDGEME_PUBLIC_TOKEN: any;
+    JUDGEME_SHOP_DOMAIN: any;
     SESSION_SECRET: string;
     PUBLIC_STOREFRONT_API_TOKEN: string;
     PRIVATE_STOREFRONT_API_TOKEN: string;

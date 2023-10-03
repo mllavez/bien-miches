@@ -26,6 +26,16 @@ import type {
   SelectedOption,
 } from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '~/utils';
+import {
+  JudgemeMedals,
+  JudgemeCarousel,
+  JudgemeReviewsTab,
+  JudgemePreviewBadge,
+  JudgemeReviewWidget,
+  JudgemeVerifiedBadge,
+  JudgemeAllReviewsCount,
+  JudgemeAllReviewsRating,
+} from '@judgeme/shopify-hydrogen';
 
 export const meta: V2_MetaFunction = ({data}) => {
   return [{title: `Hydrogen | ${data.product.title}`}];
@@ -115,7 +125,8 @@ export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant} = product;
   return (
-    <div className="product">
+    <div className="product pt-3 pb-7 px-3.5">
+      <ProductTite product={product} />
       <ProductImage image={selectedVariant?.image} />
       <ProductMain
         selectedVariant={selectedVariant}
@@ -143,6 +154,19 @@ function ProductImage({image}: {image: ProductVariantFragment['image']}) {
   );
 }
 
+function ProductTite({product}: {product: ProductFragment}) {
+  return (
+    <div className="flex">
+      <div className="product-title">
+        <h1 className="text-sm mb-1">{product.title}</h1>
+      </div>
+      <div>
+        <JudgemeAllReviewsCount />
+      </div>
+    </div>
+  );
+}
+
 function ProductMain({
   selectedVariant,
   product,
@@ -155,7 +179,6 @@ function ProductMain({
   const {title, descriptionHtml} = product;
   return (
     <div className="product-main">
-      <h1>{title}</h1>
       <ProductPrice selectedVariant={selectedVariant} />
       <br />
       <Suspense

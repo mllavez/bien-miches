@@ -14,6 +14,8 @@ import type {
 
 import bienMichesMobileBgVideo from '../../public/bien-miches-michelada-mix-santa-cruz-intro-v1-mobile.mp4';
 import bienMichesDesktopBgVideo from '../../public/bien-miches-michelada-mix-santa-cruz-intro-v1-desktop.mp4';
+import bienMichesBlackFullTriColorLogo from '../../public/bien-miches-michelada-mix-santa-cruz_black-full-tri-color-logo.png';
+import {Button, buttonVariants} from '@/components/ui/button';
 
 export const meta: V2_MetaFunction = () => {
   return [{title: 'Bien Miches Micheladas, Santa Cruz CA | Home'}];
@@ -33,6 +35,7 @@ export default function Homepage() {
   return (
     <div className="home">
       <PreFeaturedCollection products={data.recommendedProducts} />
+      <UserSignUpSignIn />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -45,8 +48,13 @@ function PreFeaturedCollection({
 }) {
   return (
     <>
-      <div className="h-[75vw]"></div>
-      <section className="overflow-hidden">
+      <div className="h-[75vw]">
+        {/* <img
+          src={bienMichesBlackFullTriColorLogo}
+          className="absolute right-0 top-28 aspect-[540/553] max-w-[140px] w-full h-fit object-contain opacity-70"
+        /> */}
+      </div>
+      <section className="overflow-x-scroll overflow-y-hidden">
         <Suspense fallback={<div>Loading...</div>}>
           <Await resolve={products}>
             {({products}) => (
@@ -57,14 +65,14 @@ function PreFeaturedCollection({
                     className="w-[136px] h-52 bg-neutral-950 rounded float-left"
                     to={`/products/${product.handle}`}
                   >
-                    <div className="h-12 p-1.5">
+                    <div className="h-11 p-1.5">
                       <h5 className="text-sm">{product.title}</h5>
                     </div>
                     <Image
                       data={product.images.nodes[0]}
                       aspectRatio="102/125"
-                      sizes="(max-width: 7.875em) 20vw, 50vw -top-1.5"
-                      className="w-full h-full object-cover"
+                      sizes="(max-width: 7.875em) 20vw, 50vw"
+                      className="w-full h-full object-cover -top-1.5"
                     />
                   </Link>
                 ))}
@@ -83,6 +91,40 @@ function PreFeaturedCollection({
     </>
   );
 }
+
+function UserSignUpSignIn() {
+  return (
+    <>
+      <div className="flex flex-col justify-center items-left gap-4 bg-white p-4">
+        <h4 className="text-neutral-900 text-lg font-bold">
+          Sign in for the best experience
+        </h4>
+        <Link
+          className={buttonVariants({
+            size: 'lg',
+            className: 'text-white text-[16px] bg-rose-700 rounded-lg shadow',
+          })}
+          to="/account/login"
+        >
+          Sign In
+        </Link>
+        <Link
+          className={buttonVariants({
+            size: 'lg',
+            className: 'bg-green-800 text-[16px] text-white rounded-lg shadow',
+          })}
+          to="/account/login"
+        >
+          Vendor Sign In
+        </Link>
+        <Link className="text-black text-sm" to="account/login">
+          Create an account
+        </Link>
+      </div>
+    </>
+  );
+}
+
 function AfterHeroSection() {
   return (
     <>
@@ -163,7 +205,7 @@ function RecommendedProducts({
                   <Image
                     data={product.images.nodes[0]}
                     aspectRatio="102/125"
-                    sizes="(min-width: 45em) 20vw, 50vw"
+                    sizes="(max-height: 24em) 20vw, 50vw"
                   />
                   <h4>{product.title}</h4>
                   <small>
