@@ -120,7 +120,7 @@ export default function App() {
     delay: data.judgeme.delay,
   });
   return (
-    <html className="dark" lang="en">
+    <html className="dark bg-background" lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

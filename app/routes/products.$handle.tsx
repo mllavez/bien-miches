@@ -36,6 +36,14 @@ import {
   JudgemeAllReviewsCount,
   JudgemeAllReviewsRating,
 } from '@judgeme/shopify-hydrogen';
+import {cn} from '@/lib/utils';
+import {buttonVariants} from '@/components/ui/button';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export const meta: V2_MetaFunction = ({data}) => {
   return [{title: `Hydrogen | ${data.product.title}`}];
@@ -142,14 +150,20 @@ function ProductImage({image}: {image: ProductVariantFragment['image']}) {
     return <div className="product-image" />;
   }
   return (
-    <div className="product-image">
-      <Image
-        alt={image.altText || 'Product Image'}
-        aspectRatio="102/125"
-        data={image}
-        key={image.id}
-        sizes="(min-width: 45em) 50vw, 100vw"
-      />
+    <div className="flex items-center justify-center">
+      <div className="product-image h-72 max-w-fit flex items-center justify-center">
+        <Image
+          alt={image.altText || 'Product Image'}
+          aspectRatio="4/5"
+          data={image}
+          key={image.id}
+          sizes="auto"
+          parent-fit="cover"
+          width="100%"
+          height="100%"
+          className=""
+        />
+      </div>
     </div>
   );
 }
@@ -179,8 +193,6 @@ function ProductMain({
   const {title, descriptionHtml} = product;
   return (
     <div className="product-main">
-      <ProductPrice selectedVariant={selectedVariant} />
-      <br />
       <Suspense
         fallback={
           <ProductForm
@@ -204,12 +216,40 @@ function ProductMain({
         </Await>
       </Suspense>
       <br />
+      <div className="border-t-2 border-neutral-700 pt-3">
+        <ProductPrice selectedVariant={selectedVariant} />
+      </div>
       <br />
-      <p>
-        <strong>Description</strong>
-      </p>
       <br />
-      <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+      <AddToCartButton
+        disabled={!selectedVariant || !selectedVariant.availableForSale}
+        onClick={() => {
+          window.location.href = window.location.href + '#cart-aside';
+        }}
+        lines={
+          selectedVariant
+            ? [
+                {
+                  merchandiseId: selectedVariant.id,
+                  quantity: 1,
+                },
+              ]
+            : []
+        }
+      >
+        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+      </AddToCartButton>
+      <br />
+      <Accordion type="single" collapsible>
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="font-bold text-lg w-full">
+            Product details
+          </AccordionTrigger>
+          <AccordionContent>
+            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       <br />
     </div>
   );
@@ -227,14 +267,30 @@ function ProductPrice({
           <p>Sale</p>
           <br />
           <div className="product-price-on-sale">
-            {selectedVariant ? <Money data={selectedVariant.price} /> : null}
+            {selectedVariant ? (
+              <Money
+                className="text-4xl"
+                data={selectedVariant.price}
+                withoutTrailingZeros
+              />
+            ) : null}
             <s>
-              <Money data={selectedVariant.compareAtPrice} />
+              <Money
+                className="text-4xl"
+                data={selectedVariant.compareAtPrice}
+                withoutTrailingZeros
+              />
             </s>
           </div>
         </>
       ) : (
-        selectedVariant?.price && <Money data={selectedVariant?.price} />
+        selectedVariant?.price && (
+          <Money
+            className="text-4xl"
+            data={selectedVariant?.price}
+            withoutTrailingZeros
+          />
+        )
       )}
     </div>
   );
@@ -258,8 +314,7 @@ function ProductForm({
       >
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
-      <br />
-      <AddToCartButton
+      {/* <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
           window.location.href = window.location.href + '#cart-aside';
@@ -276,7 +331,7 @@ function ProductForm({
         }
       >
         {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-      </AddToCartButton>
+      </AddToCartButton> */}
     </div>
   );
 }
@@ -305,7 +360,6 @@ function ProductOptions({option}: {option: VariantOption}) {
           );
         })}
       </div>
-      <br />
     </div>
   );
 }
@@ -336,6 +390,12 @@ function AddToCartButton({
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
+            className={buttonVariants({
+              size: 'lg',
+              className: cn('w-full', {
+                'opacity-50 cursor-not-allowed': disabled,
+              }),
+            })}
           >
             {children}
           </button>

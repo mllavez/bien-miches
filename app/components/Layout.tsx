@@ -40,7 +40,7 @@ export function Layout({
         <SearchAside />
         <MobileMenuAside menu={header.menu} />
         <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
-        <MaxWidthWrapper className="bg-neutral-800 md:hidden">
+        <MaxWidthWrapper className="bg-primary md:hidden">
           <Link
             to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
             className="flex px-4 py-3 w-full"
@@ -54,7 +54,7 @@ export function Layout({
             <HeaderMenu menu={header.menu} viewport="desktop" />
           </MaxWidthWrapper>
         </div>
-        <main>{children}</main>
+        <main className="">{children}</main>
         <Suspense>
           <Await resolve={footer}>
             {(footer) => <Footer menu={footer.menu} />}

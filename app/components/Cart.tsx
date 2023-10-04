@@ -3,6 +3,8 @@ import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
 import {Link} from '@remix-run/react';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/utils';
+import {cn} from '@/lib/utils';
+import {buttonVariants} from '@/components/ui/button';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -16,7 +18,7 @@ export function CartMain({layout, cart}: CartMainProps) {
   const withDiscount =
     cart &&
     Boolean(cart.discountCodes.filter((code) => code.applicable).length);
-  const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
+  const className = `cart-main${withDiscount ? ' with-discount' : ''}`;
 
   return (
     <div className={className}>
@@ -31,13 +33,17 @@ function CartDetails({layout, cart}: CartMainProps) {
 
   return (
     <div className="cart-details">
-      <CartLines lines={cart?.lines} layout={layout} />
       {cartHasItems && (
         <CartSummary cost={cart.cost} layout={layout}>
-          <CartDiscounts discountCodes={cart.discountCodes} />
+          <CartDiscounts className="mb-3" discountCodes={cart.discountCodes} />
           <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
         </CartSummary>
       )}
+      <CartLines
+        className="border-t-2 border-neutral-700 pt-4"
+        lines={cart?.lines}
+        layout={layout}
+      />
     </div>
   );
 }
@@ -45,14 +51,16 @@ function CartDetails({layout, cart}: CartMainProps) {
 function CartLines({
   lines,
   layout,
+  className,
 }: {
   layout: CartMainProps['layout'];
   lines: CartApiQueryFragment['lines'] | undefined;
+  className: string;
 }) {
   if (!lines) return null;
 
   return (
-    <div aria-labelledby="cart-lines">
+    <div aria-labelledby="cart-lines" className={className}>
       <ul>
         {lines.nodes.map((line) => (
           <CartLineItem key={line.id} line={line} layout={layout} />
@@ -122,10 +130,20 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
 
   return (
     <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
-      </a>
-      <br />
+      <Link
+        className={cn(
+          'my-3.5',
+          buttonVariants({
+            size: 'lg',
+            variant: 'default',
+            className: 'w-full',
+          }),
+        )}
+        to={checkoutUrl}
+        target="_self"
+      >
+        <p>Continue to checkout &rarr;</p>
+      </Link>
     </div>
   );
 }
@@ -144,17 +162,18 @@ export function CartSummary({
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+      {/* <h4>Totals</h4> */}
+      <div className="cart-subtotal mb-2">
+        <span className="text-xl ">Subtotal&nbsp;</span>
+        <div className="flex text-2xl leading-snug font-bold">
+          <div className="text-sm leading-7">$</div>
           {cost?.subtotalAmount?.amount ? (
-            <Money data={cost?.subtotalAmount} />
+            <Money data={cost?.subtotalAmount} withoutCurrency />
           ) : (
             '-'
           )}
-        </dd>
-      </dl>
+        </div>
+      </div>
       {children}
     </div>
   );
@@ -265,8 +284,10 @@ export function CartEmpty({
 
 function CartDiscounts({
   discountCodes,
+  className,
 }: {
   discountCodes: CartApiQueryFragment['discountCodes'];
+  className?: string;
 }) {
   const codes: string[] =
     discountCodes
@@ -274,7 +295,7 @@ function CartDiscounts({
       ?.map(({code}) => code) || [];
 
   return (
-    <div>
+    <div className={cn(className)}>
       {/* Have existing discount, display it with a remove option */}
       <dl hidden={!codes.length}>
         <div>
