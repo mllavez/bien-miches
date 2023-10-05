@@ -4,7 +4,7 @@ import {Link} from '@remix-run/react';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/utils';
 import {cn} from '@/lib/utils';
-import {buttonVariants} from '@/components/ui/button';
+import {Button, buttonVariants} from '@/components/ui/button';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -82,45 +82,45 @@ function CartLineItem({
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <li key={id} className="cart-line">
-      {image && (
-        <Image
-          alt={title}
-          aspectRatio="1/1"
-          data={image}
-          height={100}
-          loading="lazy"
-          width={100}
-        />
-      )}
-
-      <div>
-        <Link
-          prefetch="intent"
-          to={lineItemUrl}
-          onClick={() => {
-            if (layout === 'aside') {
-              // close the drawer
-              window.location.href = lineItemUrl;
-            }
-          }}
-        >
-          <p>
-            <strong>{product.title}</strong>
-          </p>
-        </Link>
-        <CartLinePrice line={line} as="span" />
-        <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
-        </ul>
-        <CartLineQuantity line={line} />
+    <li key={id} className="cart-line flex flex-col">
+      <div className="flex mb-5 mt-2">
+        {image && (
+          <Image
+            alt={title}
+            aspectRatio="1/1"
+            data={image}
+            height={135}
+            loading="lazy"
+            width={135}
+          />
+        )}
+        <div className="pl-4">
+          <Link
+            className="no-underline"
+            prefetch="intent"
+            to={lineItemUrl}
+            onClick={() => {
+              if (layout === 'aside') {
+                // close the drawer
+                window.location.href = lineItemUrl;
+              }
+            }}
+          >
+            <p className="font-normal">{product.title}</p>
+          </Link>
+          <CartLinePrice line={line} as="span" />
+          <ul>
+            {selectedOptions.map((option) => (
+              <li key={option.name}>
+                <small>
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+      <CartLineQuantity line={line} />
     </li>
   );
 }
@@ -186,7 +186,17 @@ function CartLineRemoveButton({lineIds}: {lineIds: string[]}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button type="submit">Remove</button>
+      <Button
+        type="submit"
+        className={buttonVariants({
+          size: 'sm',
+          variant: 'outline',
+          className:
+            'bg-zinc-900 border-neutral-700 shadow-[0_0.2rem_0.5rem_0_rgba(66,66,66,0.5)]',
+        })}
+      >
+        Delete
+      </Button>
     </CartForm>
   );
 }
@@ -198,30 +208,38 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantiy">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
-      <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
-        <button
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1}
-          name="decrease-quantity"
-          value={prevQuantity}
-        >
-          <span>&#8722; </span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
-      <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
-        <button
-          aria-label="Increase quantity"
-          name="increase-quantity"
-          value={nextQuantity}
-        >
-          <span>&#43;</span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
-      <CartLineRemoveButton lineIds={[lineId]} />
+    <div className="flex">
+      <div className="cart-line-quantiy h-9 w-32 float-left mr-2.5">
+        <div className="w-[30%] flex items-center justify-center rounded-tl-xl rounded-bl-xl bg-gradient-to-b from-gray-50 to-gray-200 text-stone-950">
+          <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
+            <button
+              aria-label="Decrease quantity"
+              disabled={quantity <= 1}
+              name="decrease-quantity"
+              value={prevQuantity}
+            >
+              <span>&#8722; </span>
+            </button>
+          </CartLineUpdateButton>
+        </div>
+        <div className="bg-white border-zinc-300 flex justify-center items-center w-[40%]">
+          <div className="text-stone-950">{quantity}</div>
+        </div>
+        <div className="w-[30%] flex items-center justify-center rounded-tr-xl rounded-br-xl bg-gradient-to-b from-gray-50 to-gray-200 text-stone-950">
+          <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
+            <button
+              aria-label="Increase quantity"
+              name="increase-quantity"
+              value={nextQuantity}
+            >
+              <span>&#43;</span>
+            </button>
+          </CartLineUpdateButton>
+        </div>
+      </div>
+      <div>
+        <CartLineRemoveButton lineIds={[lineId]} />
+      </div>
     </div>
   );
 }
@@ -247,8 +265,15 @@ function CartLinePrice({
   }
 
   return (
-    <div>
-      <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />
+    <div className="font-bold flex">
+      <div className="text-xs font-normal leading-5">$</div>
+      <Money
+        withoutTrailingZeros
+        withoutCurrency
+        {...passthroughProps}
+        data={moneyV2}
+        className="text-xl leading-6"
+      />
     </div>
   );
 }
@@ -345,15 +370,18 @@ function UpdateDiscountForm({
 function CartLineUpdateButton({
   children,
   lines,
+  className,
 }: {
   children: React.ReactNode;
   lines: CartLineUpdateInput[];
+  className?: string;
 }) {
   return (
     <CartForm
       route="/cart"
       action={CartForm.ACTIONS.LinesUpdate}
       inputs={{lines}}
+      className={className}
     >
       {children}
     </CartForm>
