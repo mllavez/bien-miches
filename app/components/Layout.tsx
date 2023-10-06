@@ -65,8 +65,8 @@ export function Layout({
   }
   return (
     <>
-      <MaxWidthWrapper>
-        <div className="h-[47px] flex items-center px-4">
+      <MaxWidthWrapper className="bg-black">
+        <div className="h-[48px] flex items-center px-4">
           <Logo />
         </div>
       </MaxWidthWrapper>

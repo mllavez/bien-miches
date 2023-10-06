@@ -3,6 +3,7 @@ import {Suspense} from 'react';
 import type {LayoutProps} from './Layout';
 import {ChevronDown, MapPin, Menu} from 'lucide-react';
 import MaxWidthWrapper from './MaxWidthWrapper';
+import {Logo} from './Logo';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -14,9 +15,7 @@ export function Header({header, isLoggedIn, cart}: HeaderProps) {
     <header className="header h-[58px] md:h-14">
       <HeaderMenuMobileToggle />
       <MaxWidthWrapper>
-        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-          <strong>{shop.name}</strong>
-        </NavLink>
+        <Logo />
         <Link
           to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
           className="md:flex px-4 h-full items-end hidden"

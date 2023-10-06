@@ -16,6 +16,8 @@ import bienMichesMobileBgVideo from '../../public/bien-miches-michelada-mix-sant
 import bienMichesDesktopBgVideo from '../../public/bien-miches-michelada-mix-santa-cruz-intro-v1-desktop.mp4';
 import bienMichesBlackFullTriColorLogo from '../../public/bien-miches-michelada-mix-santa-cruz_black-full-tri-color-logo.png';
 import {Button, buttonVariants} from '@/components/ui/button';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
+import {cn} from '@/lib/utils';
 
 export const meta: V2_MetaFunction = () => {
   return [{title: 'Bien Miches Micheladas, Santa Cruz CA | Home'}];
@@ -35,6 +37,7 @@ export default function Homepage() {
   return (
     <div className="home">
       <PreFeaturedCollection products={data.recommendedProducts} />
+      <HeroIntro />
       <UserSignUpSignIn />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
@@ -54,26 +57,32 @@ function PreFeaturedCollection({
           className="absolute right-0 top-28 aspect-[540/553] max-w-[140px] w-full h-fit object-contain opacity-70"
         /> */}
       </div>
-      <section className="overflow-x-scroll overflow-y-hidden">
+      <section className="overflow-x-scroll overflow-y-hidden p-0 ">
+        {/* bg-gradient-to-t from-gray-800 from-[percentage:5%_0%] */}
         <Suspense fallback={<div>Loading...</div>}>
           <Await resolve={products}>
             {({products}) => (
-              <div className="w-max my-1.5 ml-2 relative h-52 flex space-x-4">
+              <div className="w-max ml-2 relative flex space-x-4">
                 {products.nodes.map((product) => (
                   <Link
                     key={product.id}
-                    className="w-[136px] h-52 bg-neutral-950 rounded float-left"
+                    className="w-[136px] h-4/5 bg-zinc-900 text-stone-300 rounded float-left"
                     to={`/products/${product.handle}`}
                   >
-                    <div className="h-11 p-1.5">
-                      <h5 className="text-sm">{product.title}</h5>
+                    <div className="h-12 pt-1.5 pl-1.5 pr-1.5">
+                      <h5 className="text-[15px]">{product.title}</h5>
                     </div>
-                    <Image
-                      data={product.images.nodes[0]}
-                      aspectRatio="102/125"
-                      sizes="(max-width: 7.875em) 20vw, 50vw"
-                      className="w-full h-full object-cover -top-1.5"
-                    />
+                    <div className="h-32 mt-2">
+                      <Image
+                        data={product.images.nodes[0]}
+                        aspectRatio="45/44"
+                        sizes="auto"
+                        parent-fit="cover"
+                        width="100%"
+                        height="100%"
+                        className="w-full h-full object-cover -top-1.5"
+                      />
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -100,19 +109,24 @@ function UserSignUpSignIn() {
           Sign in for the best experience
         </h4>
         <Link
-          className={buttonVariants({
-            size: 'lg',
-            className: 'text-white text-[16px] bg-rose-700 rounded-lg shadow',
-          })}
+          className={cn(
+            buttonVariants({
+              size: 'default',
+              className: 'bg-orange-400 text-base text-white rounded-lg shadow',
+            }),
+          )}
           to="/account/login"
         >
           Sign In
         </Link>
         <Link
-          className={buttonVariants({
-            size: 'lg',
-            className: 'bg-green-800 text-[16px] text-white rounded-lg shadow',
-          })}
+          className={cn(
+            buttonVariants({
+              size: 'default',
+              className:
+                'bg-green-800 text-[16px] text-white rounded-lg shadow',
+            }),
+          )}
           to="/account/login"
         >
           Vendor Sign In
@@ -219,6 +233,24 @@ function RecommendedProducts({
       </Suspense>
       <br />
     </section>
+  );
+}
+
+function HeroIntro() {
+  return (
+    <div className="bg-background text-stone-300 pt-10">
+      <MaxWidthWrapper className="flex flex-col justify-center items-center gap-5 text-center">
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-h1 drop-shadow-xl uppercase bg-gradient-to-r bg-clip-text text-transparent from-green-800 from-[percentage:0%_25%] via-white via-[percentage:35%_65%] to-rose-700 to-[percentage:75%_100%]">
+          As authentic
+          <br />
+          as it gets.
+        </h1>
+        <div className="text-lg">
+          Recipe directly from family restaurant in Jalisco mexico.
+        </div>
+        <div className="text-lg">to your home</div>
+      </MaxWidthWrapper>
+    </div>
   );
 }
 

@@ -20,6 +20,7 @@ import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
 import {Layout} from '~/components/Layout';
 import tailwindCss from './styles/tailwind.css';
+import fontCss from './styles/fonts.css';
 import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
 // This is important to avoid re-fetching root queries on sub-navigations
@@ -46,6 +47,7 @@ export function links() {
     {rel: 'stylesheet', href: tailwindCss},
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
+    {rel: 'stylesheet', href: fontCss},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -113,12 +115,12 @@ export async function loader({context}: LoaderArgs) {
 export default function App() {
   const nonce = useNonce();
   const data = useLoaderData<typeof loader>();
-  useJudgeme({
-    shopDomain: data.judgeme.shopDomain,
-    publicToken: data.judgeme.publicToken,
-    cdnHost: data.judgeme.cdnHost,
-    delay: data.judgeme.delay,
-  });
+  // useJudgeme({
+  //   shopDomain: data.judgeme.shopDomain,
+  //   publicToken: data.judgeme.publicToken,
+  //   cdnHost: data.judgeme.cdnHost,
+  //   delay: data.judgeme.delay,
+  // });
   return (
     <html className="" lang="en">
       <head>

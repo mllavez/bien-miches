@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Alfa Slab One';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../../public/fonts/alfaslabone-regular-webfont.woff2')
+      format('woff2'),
+    url('../../public/fonts/alfaslabone-regular-webfont.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Alfa Slab One Override';
+  font-weight: normal;
+  font-style: normal;
+  src: local('Arial'), local(-apple-system), local(sans-serif),
+    local(ui-sans-serif);
+}
+
+@font-face {
+  font-family: 'Skranji';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../../public/fonts/skranji-regular-webfont.woff2') format('woff2'),
+    url('../../public/fonts/skranji-regular-webfont.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Skranji Override';
+  font-weight: normal;
+  font-style: normal;
+  src: local('Arial'), local(-apple-system), local(sans-serif),
+    local(ui-sans-serif);
+}

@@ -74,6 +74,10 @@ module.exports = {
       maxWidth: {
         '8xl': '1408px',
       },
+      fontFamily: {
+        logo: ['"Alfa Slab One"', '"Alfa Slab One Override"'],
+        h1: ['"Skranji"', '"Skranji Override"'],
+      },
     },
   },
   plugins: [
