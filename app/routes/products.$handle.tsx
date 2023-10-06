@@ -37,7 +37,7 @@ import {
   JudgemeAllReviewsRating,
 } from '@judgeme/shopify-hydrogen';
 import {cn} from '@/lib/utils';
-import {buttonVariants} from '@/components/ui/button';
+import {Button, buttonVariants} from '@/components/ui/button';
 import {
   Accordion,
   AccordionContent,
@@ -386,19 +386,19 @@ function AddToCartButton({
             type="hidden"
             value={JSON.stringify(analytics)}
           />
-          <button
+          <Button
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
             className={buttonVariants({
-              size: 'lg',
+              size: 'default',
               className: cn('w-full', {
                 'opacity-50 cursor-not-allowed': disabled,
               }),
             })}
           >
             {children}
-          </button>
+          </Button>
         </>
       )}
     </CartForm>

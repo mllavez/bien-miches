@@ -238,7 +238,7 @@ function RecommendedProducts({
 
 function HeroIntro() {
   return (
-    <div className="bg-background text-stone-300 pt-10">
+    <div className="bg-background text-stone-300 py-10">
       <MaxWidthWrapper className="flex flex-col justify-center items-center gap-5 text-center">
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-h1 drop-shadow-xl uppercase bg-gradient-to-r bg-clip-text text-transparent from-green-800 from-[percentage:0%_25%] via-white via-[percentage:35%_65%] to-rose-700 to-[percentage:75%_100%]">
           As authentic
