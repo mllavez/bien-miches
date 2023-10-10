@@ -50,7 +50,7 @@ function PreFeaturedCollection({
   products: Promise<RecommendedProductsQuery>;
 }) {
   return (
-    <>
+    <div>
       <div className="h-[75vw]">
         {/* <img
           src={bienMichesBlackFullTriColorLogo}
@@ -96,8 +96,8 @@ function PreFeaturedCollection({
         autoPlay
         loop
         muted
-      />
-    </>
+      ></video>
+    </div>
   );
 }
 

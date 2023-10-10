@@ -245,13 +245,13 @@ export default function Login() {
             className="accordion-row-signin border-neutral-700 solid border-2 rounded-tl rounded-tr"
           >
             <AccordionTrigger className="accordion-row-header flex pl-14 py-3.5 pr-4 w-full">
-              <Input
+              {/* <Input
                 className="absolute left-7 h-7 w-7 -mt-1"
                 id="signedIn"
                 type="radio"
                 name="status"
                 checked
-              />
+              /> */}
               <span className="text-base">Sign in.&nbsp;</span>
               <span className="text-sm pr-2">Already a customer?</span>
             </AccordionTrigger>
@@ -326,12 +326,12 @@ export default function Login() {
             className="accordion-row-register border-neutral-700 solid border-b-2 border-l-2 border-r-2 rounded-bl rounded-br"
           >
             <AccordionTrigger className="accordion-row-header flex pl-14 py-3.5 pr-4 w-full">
-              <Input
+              {/* <Input
                 className="absolute left-7 h-7 w-7 -mt-1"
                 id="register"
                 type="radio"
                 name="status"
-              />
+              /> */}
               <span className="text-base">Create account.&nbsp;</span>
               <span className="text-sm pr-2">New to Bien Miches?</span>
             </AccordionTrigger>

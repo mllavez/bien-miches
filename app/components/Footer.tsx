@@ -1,10 +1,29 @@
 import {useMatches, NavLink} from '@remix-run/react';
 import type {FooterQuery} from 'storefrontapi.generated';
+import MaxWidthWrapper from './MaxWidthWrapper';
+import {Instagram} from 'lucide-react';
+import {useLoadScript} from '@shopify/hydrogen';
 
 export function Footer({menu}: FooterQuery) {
   return (
-    <footer className="footer">
-      <FooterMenu menu={menu} />
+    <footer className="footer bg-background">
+      <MaxWidthWrapper className="flex flex-col md:flex-row justify-between items-start py-9 gap-6">
+        <h5 className="text-base">
+          From Jalisco Mexico. <br />
+          Made in Santa Cruz, CA 🌴{' '}
+        </h5>
+        <div className="flex items-start gap-4">
+          <a
+            href="https://www.instagram.com/bienmiches/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Instagram className="w-6 h-6" />
+          </a>
+        </div>
+        <div className="klaviyo-form-embed"></div>
+        <FooterMenu menu={menu} />
+      </MaxWidthWrapper>
     </footer>
   );
 }

@@ -56,10 +56,6 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {
-      rel: 'preconnect',
-      href: 'https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TdNuBs',
-    },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 }
@@ -128,7 +124,6 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-        <Script src="https://cdn.judge.me" />
       </head>
       <body className="dark bg-background">
         <Layout {...data}>
