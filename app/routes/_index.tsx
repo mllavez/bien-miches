@@ -36,7 +36,7 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
-      <PreFeaturedCollection products={data.recommendedProducts} />
+      <PreFeaturedCollection />
       <HeroIntro />
       <UserSignUpSignIn />
       <RecommendedProducts products={data.recommendedProducts} />
@@ -44,75 +44,35 @@ export default function Homepage() {
   );
 }
 
-function PreFeaturedCollection({
-  products,
-}: {
-  products: Promise<RecommendedProductsQuery>;
-}) {
+function PreFeaturedCollection() {
   return (
-    <div>
-      <div className="h-[75vw]">
-        {/* <img
-          src={bienMichesBlackFullTriColorLogo}
-          className="absolute right-0 top-28 aspect-[540/553] max-w-[140px] w-full h-fit object-contain opacity-70"
-        /> */}
+    <>
+      <div>
+        <div className="h-[75vw]"></div>
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+          src={bienMichesMobileBgVideo}
+          autoPlay
+          loop
+          muted
+        ></video>
       </div>
-      <section className="overflow-x-scroll overflow-y-hidden p-0 ">
-        {/* bg-gradient-to-t from-gray-800 from-[percentage:5%_0%] */}
-        <Suspense fallback={<div>Loading...</div>}>
-          <Await resolve={products}>
-            {({products}) => (
-              <div className="w-max ml-2 relative flex space-x-4">
-                {products.nodes.map((product) => (
-                  <Link
-                    key={product.id}
-                    className="w-[136px] h-4/5 bg-zinc-900 text-stone-300 rounded float-left"
-                    to={`/products/${product.handle}`}
-                  >
-                    <div className="h-12 pt-1.5 pl-1.5 pr-1.5">
-                      <h5 className="text-[15px]">{product.title}</h5>
-                    </div>
-                    <div className="h-32 mt-2">
-                      <Image
-                        data={product.images.nodes[0]}
-                        aspectRatio="45/44"
-                        sizes="auto"
-                        parent-fit="cover"
-                        width="100%"
-                        height="100%"
-                        className="w-full h-full object-cover -top-1.5"
-                      />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </Await>
-        </Suspense>
-      </section>
-      <video
-        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-        src={bienMichesMobileBgVideo}
-        autoPlay
-        loop
-        muted
-      ></video>
-    </div>
+    </>
   );
 }
 
 function UserSignUpSignIn() {
   return (
     <>
-      <div className="flex flex-col justify-center items-left gap-4 bg-white p-4">
-        <h4 className="text-neutral-900 text-lg font-bold">
+      <div className="flex flex-col justify-center items-left gap-4 bg-black p-4">
+        <h4 className="text-lg font-bold text-stone-300">
           Sign in for the best experience
         </h4>
         <Link
           className={cn(
             buttonVariants({
-              size: 'default',
-              className: 'bg-orange-400 text-base text-white rounded-lg shadow',
+              size: 'lg',
+              className: 'bg-green-800',
             }),
           )}
           to="/account/login"
@@ -122,16 +82,15 @@ function UserSignUpSignIn() {
         <Link
           className={cn(
             buttonVariants({
-              size: 'default',
-              className:
-                'bg-green-800 text-[16px] text-white rounded-lg shadow',
+              size: 'lg',
+              className: '',
             }),
           )}
           to="/account/login"
         >
           Vendor Sign In
         </Link>
-        <Link className="text-black text-sm" to="account/login">
+        <Link className="text-sm" to="account/login">
           Create an account
         </Link>
       </div>
@@ -199,35 +158,39 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery>;
 }) {
   return (
-    <section className="recommended-products flex flex-col items-center bg-amber-700 py-6 gap-4">
-      <h2 className="w-72 text-center text-white text-3xl font-normal font-['Denk One']">
-        Latest
+    <section
+      id="shop"
+      className="recommended-products flex flex-col items-center bg-gradient-to-b from-rose-700 to-25% py-6 gap-4"
+    >
+      <h2 className="w-72 text-center text-white text-3xl font-normal font-['Denk One'] pb-9 pt-6 font-h1 uppercase">
+        Shop Bien Miches
       </h2>
-      <h3 className="w-72 text-center text-white text-xl font-normal font-['Denk One']">
-        Stay Party-Ready with Our Freshest Michelada Gear.
-      </h3>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {({products}) => (
-            <div className="recommended-products-grid">
-              {products.nodes.map((product) => (
-                <Link
-                  key={product.id}
-                  className="recommended-product"
-                  to={`/products/${product.handle}`}
-                >
-                  <Image
-                    data={product.images.nodes[0]}
-                    aspectRatio="102/125"
-                    sizes="(max-height: 24em) 20vw, 50vw"
-                  />
-                  <h4>{product.title}</h4>
-                  <small>
-                    <Money data={product.priceRange.minVariantPrice} />
-                  </small>
-                </Link>
-              ))}
-            </div>
+            <MaxWidthWrapper>
+              <div className="recommended-products-grid">
+                {products.nodes.map((product) => (
+                  <Link
+                    key={product.id}
+                    className="recommended-product text-center"
+                    to={`/products/${product.handle}`}
+                  >
+                    <Image
+                      data={product.images.nodes[0]}
+                      aspectRatio="102/125"
+                      sizes="(max-height: 24em) 20vw, 50vw"
+                      className="rounded-lg mb-5 border-primary border-2 border-solid"
+                    />
+                    <h3 className="text-lg leading-snug">{product.title}</h3>
+                    <Money
+                      className="text-base"
+                      data={product.priceRange.minVariantPrice}
+                    />
+                  </Link>
+                ))}
+              </div>
+            </MaxWidthWrapper>
           )}
         </Await>
       </Suspense>
@@ -238,17 +201,30 @@ function RecommendedProducts({
 
 function HeroIntro() {
   return (
-    <div className="bg-background text-stone-300 py-10">
+    <div className="bg-background py-10">
       <MaxWidthWrapper className="flex flex-col justify-center items-center gap-5 text-center">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-h1 drop-shadow-xl uppercase bg-gradient-to-r bg-clip-text text-transparent from-green-800 from-[percentage:0%_25%] via-white via-[percentage:35%_65%] to-rose-700 to-[percentage:75%_100%]">
-          As authentic
-          <br />
-          as it gets.
+        <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl font-h1 drop-shadow-xl uppercase bg-gradient-to-r bg-clip-text text-transparent from-green-800 from-[percentage:0%_25%] via-white via-[percentage:35%_65%] to-rose-700 to-[percentage:75%_100%]">
+          As authentic as it gets.
         </h1>
         <div className="text-lg">
-          Recipe directly from family restaurant in Jalisco mexico.
+          Premium ingredients imported from Mexico.
+          <br />
+          <br />
+          From a traditional family restaurant in Jalisco, Mexico.
+          <br />
+          <br />
+          Shipped directly to your home!
+          <br />
         </div>
-        <div className="text-lg">to your home</div>
+        <Link
+          to="#shop"
+          className={buttonVariants({
+            size: 'lg',
+            className: 'bg-green-800',
+          })}
+        >
+          Shop Now
+        </Link>
       </MaxWidthWrapper>
     </div>
   );

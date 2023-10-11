@@ -19,7 +19,7 @@ import favicon from '../public/favicon.ico';
 import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
 import {Layout} from '~/components/Layout';
-import tailwindCss from './styles/tailwind.css';
+//import tailwindCss from './styles/tailwind.css';
 import fontCss from './styles/fonts.css';
 import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
@@ -44,7 +44,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
-    {rel: 'stylesheet', href: tailwindCss},
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
     {rel: 'stylesheet', href: fontCss},

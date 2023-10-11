@@ -381,7 +381,6 @@ function CartLineUpdateButton({
       route="/cart"
       action={CartForm.ACTIONS.LinesUpdate}
       inputs={{lines}}
-      className={className}
     >
       {children}
     </CartForm>
