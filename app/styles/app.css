@@ -24,7 +24,7 @@
     --input: 0 0% 89.8%;
     --ring: 0 72.2% 50.6%;
     --radius: 0.5rem;
-    --aside-width: 400px;
+    --aside-width: 100%;
     --cart-aside-summary-height-with-discount: 300px;
     --cart-aside-summary-height: 250px;
     --grid-item-width: 355px;
@@ -122,10 +122,6 @@ aside p {
   &:last-child {
     margin: 0;
   }
-}
-
-aside li {
-  margin-bottom: 0.125rem;
 }
 
 .overlay {
@@ -262,13 +258,13 @@ aside li {
 */
 .cart-main {
   height: 100%;
-  max-height: calc(100vh - var(--cart-aside-summary-height));
+  max-height: 100vh;
   overflow-y: auto;
   width: auto;
 }
 
 .cart-main.with-discount {
-  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
+  max-height: 100vh;
 }
 
 /* .cart-line {

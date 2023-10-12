@@ -90,7 +90,7 @@ function UserSignUpSignIn() {
         >
           Vendor Sign In
         </Link>
-        <Link className="text-sm" to="account/login">
+        <Link id="shop" className="text-sm" to="account/login">
           Create an account
         </Link>
       </div>
@@ -158,10 +158,7 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery>;
 }) {
   return (
-    <section
-      id="shop"
-      className="recommended-products flex flex-col items-center bg-gradient-to-b from-rose-700 to-25% py-6 gap-4"
-    >
+    <section className="recommended-products flex flex-col items-center bg-gradient-to-b from-rose-700 to-25% py-6 gap-4">
       <h2 className="w-72 text-center text-white text-3xl font-normal font-['Denk One'] pb-9 pt-6 font-h1 uppercase">
         Shop Bien Miches
       </h2>

@@ -40,7 +40,7 @@ function CartDetails({layout, cart}: CartMainProps) {
         </CartSummary>
       )}
       <CartLines
-        className="border-t-2 border-neutral-700 pt-4"
+        className="border-t-2 border-neutral-700 pt-2"
         lines={cart?.lines}
         layout={layout}
       />
@@ -164,8 +164,8 @@ export function CartSummary({
     <div aria-labelledby="cart-summary" className={className}>
       {/* <h4>Totals</h4> */}
       <div className="cart-subtotal mb-2">
-        <span className="text-xl ">Subtotal&nbsp;</span>
-        <div className="flex text-2xl leading-snug font-bold">
+        <span className="text-xl">Subtotal&nbsp;</span>
+        <div className="flex text-[22px] leading-snug font-bold">
           <div className="text-sm leading-7">$</div>
           {cost?.subtotalAmount?.amount ? (
             <Money data={cost?.subtotalAmount} withoutCurrency />

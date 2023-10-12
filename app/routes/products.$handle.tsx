@@ -135,7 +135,7 @@ export default function Product() {
   return (
     <div className="product pt-3 pb-7 px-3.5">
       <ProductTite product={product} />
-      <ProductImage image={selectedVariant?.image} />
+      <ProductImage image={selectedVariant?.image} variants={variants} />
       <ProductMain
         selectedVariant={selectedVariant}
         product={product}
@@ -145,21 +145,32 @@ export default function Product() {
   );
 }
 
-function ProductImage({image}: {image: ProductVariantFragment['image']}) {
+function ProductImage({
+  image,
+  variants,
+}: {
+  image: ProductVariantFragment['image'];
+  variants: Promise<ProductVariantsQuery>;
+}) {
   if (!image) {
     return <div className="product-image" />;
   }
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mb-1">
       <div className="product-image h-72 max-w-fit flex items-center justify-center">
         <Image
           alt={image.altText || 'Product Image'}
           aspectRatio="4/5"
           data={image}
+          crop="center"
           key={image.id}
-          sizes="auto"
           parent-fit="cover"
-          width="100%"
+          srcSetOptions={{
+            intervals: 3,
+            startingWidth: 288,
+            incrementSize: 128,
+            placeholderWidth: 288,
+          }}
           height="100%"
           className=""
         />
@@ -215,11 +226,9 @@ function ProductMain({
           )}
         </Await>
       </Suspense>
-      <br />
-      <div className="border-t-2 border-neutral-700 pt-3">
+      <div className="border-t-2 border-neutral-700 pt-7">
         <ProductPrice selectedVariant={selectedVariant} />
       </div>
-      <br />
       <br />
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
@@ -240,16 +249,13 @@ function ProductMain({
         {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
       </AddToCartButton>
       <br />
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="font-bold text-lg w-full">
-            Product details
-          </AccordionTrigger>
-          <AccordionContent>
-            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="flex-col marker:w-full">
+        <h3 className="pb-2 text-lg font-bold">Details</h3>
+        <div
+          className="text-[15px]"
+          dangerouslySetInnerHTML={{__html: descriptionHtml}}
+        />
+      </div>
       <br />
     </div>
   );
@@ -340,7 +346,7 @@ function ProductOptions({option}: {option: VariantOption}) {
   return (
     <div className="product-options" key={option.name}>
       <h5>{option.name}</h5>
-      <div className="product-options-grid">
+      <div className="product-options-grid py-3.5">
         {option.values.map(({value, isAvailable, isActive, to}) => {
           return (
             <Link
@@ -392,7 +398,7 @@ function AddToCartButton({
             disabled={disabled ?? fetcher.state !== 'idle'}
             className={buttonVariants({
               size: 'default',
-              className: cn('w-full', {
+              className: cn('w-full rounded-full h-11', {
                 'opacity-50 cursor-not-allowed': disabled,
               }),
             })}
