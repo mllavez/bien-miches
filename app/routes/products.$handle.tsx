@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import {defer, redirect, type LoaderArgs} from '@shopify/remix-oxygen';
 import {
   Await,
@@ -128,16 +128,58 @@ function redirectToFirstVariant({
 export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant, images} = product;
+  const [windowSize, setWindowSize] = useState([0, 0]);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   return (
-    <div className="product pt-3 pb-7 px-3.5">
-      <ProductTite product={product} />
-      <ProductImage image={selectedVariant?.image} images={images} />
-      <ProductMain
-        selectedVariant={selectedVariant}
-        product={product}
-        variants={variants}
+    <div className="product pt-3 pb-7 px-3.5 md:flex">
+      <ProductTite className="md:hidden" product={product} />
+      <ProductImage
+        image={selectedVariant?.image}
+        images={images}
+        windowSize={windowSize[0]}
       />
+      <div className="md:w-[52%]">
+        <ProductMain
+          selectedVariant={selectedVariant}
+          product={product}
+          variants={variants}
+          windowSize={windowSize[0]}
+        />
+        <div className="hidden md:block w-[244px] -mr-[244px] float-left">
+          <div className="rounded-lg py-3 px-4">
+            <AddToCartButton
+              disabled={!selectedVariant || !selectedVariant.availableForSale}
+              onClick={() => {
+                window.location.href = window.location.href + '#cart-aside';
+              }}
+              lines={
+                selectedVariant
+                  ? [
+                      {
+                        merchandiseId: selectedVariant.id,
+                        quantity: 1,
+                      },
+                    ]
+                  : []
+              }
+            >
+              {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+            </AddToCartButton>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -145,6 +187,7 @@ export default function Product() {
 function ProductImage({
   image,
   images,
+  windowSize,
 }: {
   image: ProductVariantFragment['image'];
   images: {
@@ -152,20 +195,53 @@ function ProductImage({
       Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
     >;
   };
+  windowSize?: number;
 }) {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  let sliderSettings = new Object();
+  if (windowSize >= 768) {
+    sliderSettings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      className: '',
+      // appendDots: (dots: any) => (
+      //   <div style={{position: 'absolute', left: '0'}}>
+      //     <ul style={{margin: '0px'}}> {dots} </ul>
+      //   </div>
+      // ),
+      appendDots: (dots: any) => {
+        return (
+          <div className="absolute left-0">
+            <ul className="md:flex md:flex-col md:mt-8"> {dots} </ul>
+          </div>
+        );
+      },
+      customPaging: (i: any) => {
+        return (
+          <a className="block border border-primary rounded-lg">
+            <img className="rounded-lg" src={`${images.nodes[i].url}`} />
+          </a>
+        );
+      },
+    };
+  } else {
+    sliderSettings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    };
+  }
+
   if (!image) {
     return <div className="product-image" />;
   }
   // if (images.nodes.length > 1) {
   return (
-    <div className="flex-column">
+    <div className="block md:w-[45%] md:mr-[2%] md:top-14 md:sticky md:float-left ">
       <Slider {...sliderSettings}>
         {images.nodes.map((image) => (
           <Image
@@ -213,15 +289,16 @@ function ProductImage({
   // );
 }
 
-function ProductTite({product}: {product: ProductFragment}) {
+function ProductTite({
+  product,
+  className,
+}: {
+  product: ProductFragment;
+  className?: string;
+}) {
   return (
-    <div className="flex">
-      <div className="product-title">
-        <h1 className="text-sm mb-1">{product.title}</h1>
-      </div>
-      <div>
-        <JudgemeAllReviewsCount />
-      </div>
+    <div className={cn(className, 'product-title')}>
+      <h1 className="text-sm mb-1 md:text-2xl md:font-bold">{product.title}</h1>
     </div>
   );
 }
@@ -230,14 +307,23 @@ function ProductMain({
   selectedVariant,
   product,
   variants,
+  windowSize,
 }: {
   product: ProductFragment;
   selectedVariant: ProductFragment['selectedVariant'];
   variants: Promise<ProductVariantsQuery>;
+  windowSize?: number;
 }) {
   const {title, descriptionHtml} = product;
   return (
-    <div className="product-main">
+    <div className="product-main md:w-[48.5%] md:pr-[6.5%] md:float-left">
+      <ProductTite
+        className="product-main-title hidden md:block"
+        product={product}
+      />
+      <div className="border-t-2 border-neutral-700 pt-7">
+        <ProductPrice selectedVariant={selectedVariant} />
+      </div>
       <Suspense
         fallback={
           <ProductForm
@@ -260,29 +346,28 @@ function ProductMain({
           )}
         </Await>
       </Suspense>
-      <div className="border-t-2 border-neutral-700 pt-7">
-        <ProductPrice selectedVariant={selectedVariant} />
+      <div className="block md:hidden">
+        <br />
+        <AddToCartButton
+          disabled={!selectedVariant || !selectedVariant.availableForSale}
+          onClick={() => {
+            window.location.href = window.location.href + '#cart-aside';
+          }}
+          lines={
+            selectedVariant
+              ? [
+                  {
+                    merchandiseId: selectedVariant.id,
+                    quantity: 1,
+                  },
+                ]
+              : []
+          }
+        >
+          {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        </AddToCartButton>
+        <br />
       </div>
-      <br />
-      <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
-        }}
-        lines={
-          selectedVariant
-            ? [
-                {
-                  merchandiseId: selectedVariant.id,
-                  quantity: 1,
-                },
-              ]
-            : []
-        }
-      >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
-      </AddToCartButton>
-      <br />
       <div className="flex-col marker:w-full">
         <h3 className="pb-2 text-lg font-bold">Details</h3>
         <div
@@ -297,8 +382,10 @@ function ProductMain({
 
 function ProductPrice({
   selectedVariant,
+  className,
 }: {
   selectedVariant: ProductFragment['selectedVariant'];
+  className?: string;
 }) {
   return (
     <div className="product-price">
@@ -309,14 +396,14 @@ function ProductPrice({
           <div className="product-price-on-sale">
             {selectedVariant ? (
               <Money
-                className="text-4xl"
+                className={cn(className)}
                 data={selectedVariant.price}
                 withoutTrailingZeros
               />
             ) : null}
             <s>
               <Money
-                className="text-4xl"
+                className={cn(className)}
                 data={selectedVariant.compareAtPrice}
                 withoutTrailingZeros
               />
@@ -326,7 +413,7 @@ function ProductPrice({
       ) : (
         selectedVariant?.price && (
           <Money
-            className="text-4xl"
+            className={cn(className)}
             data={selectedVariant?.price}
             withoutTrailingZeros
           />

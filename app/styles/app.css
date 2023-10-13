@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -54,6 +54,11 @@
     --input: 0 0% 14.9%;
     --ring: 0 72.2% 50.6%;
   }
+  /*
+* --------------------------------------------------
+* slick carousel styles
+* --------------------------------------------------
+*/
 }
 
 input {
@@ -528,5 +533,44 @@ aside p {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/*
+* --------------------------------------------------
+* slick carousel styles
+* --------------------------------------------------
+*/
+.slick-dots li.slick-active button:before {
+  color: hsl(var(--primary));
+}
+
+.slick-dots li button:before {
+  font-size: 8px;
+}
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
+.slick-list {
+  @media (min-width: theme('screens.md')) {
+    left: 44px;
+    width: calc(100% - 44px);
+  }
+}
+.slick-dots {
+  @media (min-width: theme('screens.md')) {
+    top: 0px;
+    bottom: auto;
+    width: 40px;
+  }
+}
+.slick-dots li {
+  @media (min-width: theme('screens.md')) {
+    height: 100%;
+    width: 100%;
+    margin: 0 0 8px 0;
+    /*border: 1px solid hsl(var(--primary));
+    border-radius: 8px;*/
   }
 }
