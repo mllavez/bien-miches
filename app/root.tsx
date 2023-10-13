@@ -19,7 +19,9 @@ import favicon from '../public/favicon.ico';
 import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
 import {Layout} from '~/components/Layout';
-//import tailwindCss from './styles/tailwind.css';
+import slickCss from 'slick-carousel/slick/slick.css';
+import slickThemeCss from 'slick-carousel/slick/slick-theme.css';
+
 import fontCss from './styles/fonts.css';
 import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
@@ -44,6 +46,8 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
+    {rel: 'stylesheet', href: slickCss},
+    {rel: 'stylesheet', href: slickThemeCss},
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
     {rel: 'stylesheet', href: fontCss},

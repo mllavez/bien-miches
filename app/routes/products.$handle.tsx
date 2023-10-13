@@ -38,12 +38,8 @@ import {
 } from '@judgeme/shopify-hydrogen';
 import {cn} from '@/lib/utils';
 import {Button, buttonVariants} from '@/components/ui/button';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import * as StorefrontAPI from '@shopify/hydrogen/storefront-api-types';
+import Slider from 'react-slick';
 
 export const meta: V2_MetaFunction = ({data}) => {
   return [{title: `Hydrogen | ${data.product.title}`}];
@@ -131,11 +127,12 @@ function redirectToFirstVariant({
 
 export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
-  const {selectedVariant} = product;
+  const {selectedVariant, images} = product;
+
   return (
     <div className="product pt-3 pb-7 px-3.5">
       <ProductTite product={product} />
-      <ProductImage image={selectedVariant?.image} variants={variants} />
+      <ProductImage image={selectedVariant?.image} images={images} />
       <ProductMain
         selectedVariant={selectedVariant}
         product={product}
@@ -147,36 +144,73 @@ export default function Product() {
 
 function ProductImage({
   image,
-  variants,
+  images,
 }: {
   image: ProductVariantFragment['image'];
-  variants: Promise<ProductVariantsQuery>;
+  images: {
+    nodes: Array<
+      Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
+    >;
+  };
 }) {
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   if (!image) {
     return <div className="product-image" />;
   }
+  // if (images.nodes.length > 1) {
   return (
-    <div className="flex items-center justify-center mb-1">
-      <div className="product-image h-72 max-w-fit flex items-center justify-center">
-        <Image
-          alt={image.altText || 'Product Image'}
-          aspectRatio="4/5"
-          data={image}
-          crop="center"
-          key={image.id}
-          parent-fit="cover"
-          srcSetOptions={{
-            intervals: 3,
-            startingWidth: 288,
-            incrementSize: 128,
-            placeholderWidth: 288,
-          }}
-          height="100%"
-          className=""
-        />
-      </div>
+    <div className="flex-column">
+      <Slider {...sliderSettings}>
+        {images.nodes.map((image) => (
+          <Image
+            alt={image.altText || 'Product Image'}
+            aspectRatio="4/5"
+            data={image}
+            crop="center"
+            key={image.id}
+            parent-fit="cover"
+            srcSetOptions={{
+              intervals: 3,
+              startingWidth: 288,
+              incrementSize: 128,
+              placeholderWidth: 288,
+            }}
+            height="100%"
+            className=""
+          />
+        ))}
+      </Slider>
     </div>
   );
+  // }
+  // return (
+  //   <div className="flex items-center justify-center mb-1">
+  //     <div className="product-image h-72 max-w-fit flex items-center justify-center">
+  //       <Image
+  //         alt={image.altText || 'Product Image'}
+  //         aspectRatio="4/5"
+  //         data={image}
+  //         crop="center"
+  //         key={image.id}
+  //         parent-fit="cover"
+  //         srcSetOptions={{
+  //           intervals: 3,
+  //           startingWidth: 288,
+  //           incrementSize: 128,
+  //           placeholderWidth: 288,
+  //         }}
+  //         height="100%"
+  //         className=""
+  //       />
+  //     </div>
+  //   </div>
+  // );
 }
 
 function ProductTite({product}: {product: ProductFragment}) {
@@ -459,6 +493,15 @@ const PRODUCT_FRAGMENT = `#graphql
     options {
       name
       values
+    }
+    images(first: 5) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
     }
     selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
       ...ProductVariant

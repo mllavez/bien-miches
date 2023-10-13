@@ -56,10 +56,6 @@
   }
 }
 
-body > main {
-  margin: 0;
-}
-
 input {
   color: black;
 }
@@ -434,7 +430,7 @@ aside p {
 * routes/products.$handle.tsx
 * --------------------------------------------------
 */
-.product {
+/* .product {
   display: grid;
   @media (min-width: 45em) {
     grid-template-columns: 1fr 1fr;
@@ -460,7 +456,7 @@ aside p {
   align-self: start;
   position: sticky;
   top: 6rem;
-}
+} */
 
 .product-price-on-sale {
   display: flex;
