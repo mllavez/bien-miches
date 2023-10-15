@@ -198,7 +198,7 @@ function ProductImage({
   windowSize?: number;
 }) {
   let sliderSettings = new Object();
-  if (windowSize >= 768) {
+  if (typeof windowSize === 'undefined' || windowSize >= 768) {
     sliderSettings = {
       dots: true,
       infinite: true,
