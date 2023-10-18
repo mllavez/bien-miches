@@ -15,10 +15,24 @@ export default async function handleRequest(
       "'self'",
       'https://cdn.shopify.com',
       'https://shopify.com',
-      'https://static.klaviyo.com',
-      'https://static-tracking.klaviyo.com',
       'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com',
+    ],
+    scriptSrc: [
+      "'self'",
+      "'unsafe-eval'",
+      "'unsafe-inline'",
+      'https://static.klaviyo.com', //✅
+      'https://static-tracking.klaviyo.com', //✅
       'https://cdn.judge.me',
+    ],
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://fonts.googleapis.com',
+      'https://cdn.shopify.com',
+      'https://static.klaviyo.com', //✅
+      'https://static-tracking.klaviyo.com', //✅
     ],
   });
 

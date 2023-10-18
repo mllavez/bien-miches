@@ -25,6 +25,7 @@ export type LayoutProps = {
   isLoggedIn: boolean;
 };
 
+const PLAIN_HEADER_PATHS = ['/account/login', '/account/activate'];
 export function Layout({
   cart,
   children = null,
@@ -33,28 +34,16 @@ export function Layout({
   isLoggedIn,
 }: LayoutProps) {
   const location = useLocation();
-  if (location.pathname !== '/account/login') {
+  console.log(location.pathname);
+  if (PLAIN_HEADER_PATHS.some((path) => location.pathname.startsWith(path))) {
     return (
       <>
-        <CartAside cart={cart} />
-        <SearchAside />
-        <MobileMenuAside menu={header.menu} />
-        <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
-        <MaxWidthWrapper className="bg-primary md:hidden">
-          <Link
-            to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
-            className="flex px-4 py-3 w-full"
-          >
-            <MapPin className="flex mr-5" />
-            Pick up at Get Faded Barbershop <ChevronDown className="w-5" />
-          </Link>
+        <MaxWidthWrapper className="bg-black">
+          <div className="h-[48px] flex items-center">
+            <Logo />
+          </div>
         </MaxWidthWrapper>
-        <div className="bg-neutral-800">
-          <MaxWidthWrapper className="hidden h-10 md:flex items-center">
-            <HeaderMenu menu={header.menu} viewport="desktop" />
-          </MaxWidthWrapper>
-        </div>
-        <main className="">{children}</main>
+        <main className="py-2.5">{children}</main>
         <Suspense>
           <Await resolve={footer}>
             {(footer) => <Footer menu={footer.menu} />}
@@ -65,15 +54,30 @@ export function Layout({
   }
   return (
     <>
-      <MaxWidthWrapper className="bg-black">
-        <div className="h-[48px] flex items-center px-4">
-          <Logo />
-        </div>
+      <CartAside cart={cart} />
+      <SearchAside />
+      <MobileMenuAside menu={header.menu} />
+      <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      <MaxWidthWrapper className="bg-primary md:hidden">
+        <Link
+          to="https://www.google.com/maps/dir/?api=1&destination=Get%20Faded%20Barbershop,%201007%20Cedar%20St,%20Santa%20Cruz,%20CA%2095060"
+          className="flex px-4 py-3 w-full"
+        >
+          <MapPin className="flex mr-5" />
+          Pick up at Get Faded Barbershop <ChevronDown className="w-5" />
+        </Link>
       </MaxWidthWrapper>
-      <main>{children}</main>
+      <div className="bg-neutral-800">
+        <MaxWidthWrapper className="hidden h-10 md:flex items-center">
+          <HeaderMenu menu={header.menu} viewport="desktop" />
+        </MaxWidthWrapper>
+      </div>
+      <main className="">{children}</main>
       <Suspense>
         <Await resolve={footer}>
-          {(footer) => <Footer menu={footer.menu} />}
+          {(footer) => (
+            <Footer menu={footer.menu} className="md:bg-transparent" />
+          )}
         </Await>
       </Suspense>
     </>

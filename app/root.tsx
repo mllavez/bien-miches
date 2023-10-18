@@ -60,6 +60,12 @@ export function links() {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {rel: 'preconnect', href: 'https://cdn.judge.me'},
+    {rel: 'preconnect', href: 'https://judge.me'},
+    {
+      rel: 'preconnect',
+      href: 'https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TdNuBs',
+    },
   ];
 }
 
@@ -114,12 +120,12 @@ export async function loader({context}: LoaderArgs) {
 export default function App() {
   const nonce = useNonce();
   const data = useLoaderData<typeof loader>();
-  // useJudgeme({
-  //   shopDomain: data.judgeme.shopDomain,
-  //   publicToken: data.judgeme.publicToken,
-  //   cdnHost: data.judgeme.cdnHost,
-  //   delay: data.judgeme.delay,
-  // });
+  useJudgeme({
+    shopDomain: data.judgeme.shopDomain,
+    publicToken: data.judgeme.publicToken,
+    cdnHost: data.judgeme.cdnHost,
+    delay: data.judgeme.delay,
+  });
   return (
     <html className="" lang="en">
       <head>
@@ -127,6 +133,11 @@ export default function App() {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        <Script
+          async
+          type="text/javascript"
+          src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TdNuBs"
+        ></Script>
       </head>
       <body className="dark bg-background">
         <Layout {...data}>

@@ -22,6 +22,14 @@ import {
 } from '@/components/ui/accordion';
 
 import {Input} from '@/components/ui/input';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/components/ui/card';
 
 type ActionResponse = {
   error: string | null;
@@ -230,173 +238,185 @@ export default function Login() {
   const error = data?.error || null;
 
   return (
-    <MaxWidthWrapper className="pt-5 pd-7">
-      <div className="login w-full">
-        <h1 className="text-xl pb-1 text-stone-300">
-          Ximopanōltih, Bienvenidos, Welcome
-        </h1>
-        <Accordion
-          type="single"
-          collapsible
-          className="accordion-signin-signup-page pt-1.5 pb-4"
-        >
-          <AccordionItem
-            value="sign-in"
-            className="accordion-row-signin border-neutral-700 solid border-2 rounded-tl rounded-tr"
-          >
-            <AccordionTrigger className="accordion-row-header flex pl-14 py-3.5 pr-4 w-full">
-              {/* <Input
-                className="absolute left-7 h-7 w-7 -mt-1"
-                id="signedIn"
-                type="radio"
-                name="status"
-                checked
-              /> */}
-              <span className="text-base">Sign in.&nbsp;</span>
-              <span className="text-sm pr-2">Already a customer?</span>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pt-3.5">
-              <Form method="POST">
-                <fieldset className="flex-col gap-3.5">
-                  <Input
-                    className="h-12 text-stone-300 rounded"
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    placeholder="Email address"
-                    aria-label="Email address"
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus
-                  />
-                  <Input
-                    className="h-12 text-stone-300 rounded"
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    placeholder="Password"
-                    aria-label="Password"
-                    minLength={8}
-                    required
-                  />
-                </fieldset>
-                {error ? (
-                  <p>
-                    <mark>
-                      <small>{error}</small>
-                    </mark>
-                  </p>
-                ) : (
-                  <br />
-                )}
-                <Button
-                  type="submit"
-                  aria-label="Sign in"
-                  name="_action"
-                  value="sign-in"
-                  className={buttonVariants({
-                    size: 'lg',
-                    variant: 'default',
-                    className: 'w-full rounded-lg',
-                  })}
-                >
-                  Sign in
-                </Button>
-              </Form>
-              <div>
-                <p>
-                  <Link
-                    to="/account/recover"
-                    className={buttonVariants({
-                      size: 'lg',
-                      variant: 'link',
-                      className: 'm-0 p-0 leading-none -mb-2',
-                    })}
-                  >
-                    Forgot password →
-                  </Link>
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem
-            value="register"
-            className="accordion-row-register border-neutral-700 solid border-b-2 border-l-2 border-r-2 rounded-bl rounded-br"
-          >
-            <AccordionTrigger className="accordion-row-header flex pl-14 py-3.5 pr-4 w-full">
-              {/* <Input
+    <div className="my-0 mx-auto max-w-[400px] mt-1">
+      <h3 className="text-xl font-semibold tracking-tight pb-2 leading-7">
+        Ximopanōltih, Bienvenidos, Welcome
+      </h3>
+      <Card className="">
+        <CardContent className="p-0">
+          <div className="login w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="accordion-signin-signup-page"
+              defaultValue="sign-in"
+            >
+              <AccordionItem
+                value="register"
+                className="accordion-row-register border-neutral-700 solid border-2 rounded-tl rounded-tr"
+              >
+                <AccordionTrigger className="accordion-row-header flex py-3.5 px-4 w-full justify-start">
+                  {/* <input
                 className="absolute left-7 h-7 w-7 -mt-1"
                 id="register"
                 type="radio"
                 name="status"
               /> */}
-              <span className="text-base">Create account.&nbsp;</span>
-              <span className="text-sm pr-2">New to Bien Miches?</span>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 py-3.5">
-              <Form method="POST">
-                <fieldset className="flex-col gap-3.5">
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    placeholder="Email"
-                    aria-label="Email"
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus
-                  />
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    placeholder="Password"
-                    aria-label="Password"
-                    minLength={8}
-                    required
-                  />
-                  <Input
-                    id="passwordConfirm"
-                    name="passwordConfirm"
-                    type="password"
-                    autoComplete="current-password"
-                    placeholder="Re-enter password"
-                    aria-label="Re-enter password"
-                    minLength={8}
-                    required
-                  />
-                </fieldset>
-                {error ? (
-                  <p>
-                    <mark>
-                      <small>{error}</small>
-                    </mark>
-                  </p>
-                ) : (
-                  <br />
-                )}
-                <Button
-                  type="submit"
-                  aria-label="Register"
-                  name="_action"
-                  value="register"
-                  className={buttonVariants({
-                    size: 'lg',
-                    variant: 'default',
-                    className: 'w-full rounded-lg',
-                  })}
-                >
-                  Register
-                </Button>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
-    </MaxWidthWrapper>
+                  <span className="text-base">Create account.&nbsp;</span>
+                  <span className="text-sm leading-[revert] pr-2">
+                    New to Bien Miches?
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 py-3.5">
+                  <Form method="POST">
+                    <fieldset className="flex-col gap-3.5">
+                      <Input
+                        className="h-12 text-stone-300"
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        placeholder="Email"
+                        aria-label="Email"
+                        // eslint-disable-next-line jsx-a11y/no-autofocus
+                        autoFocus
+                      />
+                      <Input
+                        className="h-12 first-letter:text-stone-300"
+                        id="password"
+                        name="password"
+                        type="password"
+                        autoComplete="current-password"
+                        placeholder="Password"
+                        aria-label="Password"
+                        minLength={8}
+                        required
+                      />
+                      <Input
+                        className="h-12 text-stone-300"
+                        id="passwordConfirm"
+                        name="passwordConfirm"
+                        type="password"
+                        autoComplete="current-password"
+                        placeholder="Re-enter password"
+                        aria-label="Re-enter password"
+                        minLength={8}
+                        required
+                      />
+                    </fieldset>
+                    {error ? (
+                      <p>
+                        <mark>
+                          <small>{error}</small>
+                        </mark>
+                      </p>
+                    ) : (
+                      <br />
+                    )}
+                    <Button
+                      type="submit"
+                      aria-label="Register"
+                      name="_action"
+                      value="register"
+                      className={buttonVariants({
+                        size: 'lg',
+                        variant: 'default',
+                        className: 'w-full rounded-lg',
+                      })}
+                    >
+                      Register
+                    </Button>
+                  </Form>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem
+                value="sign-in"
+                className="accordion-row-signin border-neutral-700 solid border-b-2 border-l-2 border-r-2 rounded-bl rounded-br"
+              >
+                <AccordionTrigger className="accordion-row-header flex py-3.5 px-4 w-full justify-start">
+                  {/* <Input
+                className="absolute left-7 h-7 w-7 -mt-1"
+                id="sign-in"
+                type="radio"
+                name="status"
+                checked
+              /> */}
+                  <span className="text-base">Sign in.&nbsp;</span>
+                  <span className="text-sm leading-[revert] pr-2">
+                    Already a customer?
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pt-3.5">
+                  <Form method="POST">
+                    <fieldset className="flex-col gap-3.5">
+                      <Input
+                        className="h-12 text-stone-300 rounded"
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        placeholder="Email address"
+                        aria-label="Email address"
+                        // eslint-disable-next-line jsx-a11y/no-autofocus
+                        autoFocus
+                      />
+                      <Input
+                        className="h-12 text-stone-300 rounded"
+                        id="password"
+                        name="password"
+                        type="password"
+                        autoComplete="current-password"
+                        placeholder="Password"
+                        aria-label="Password"
+                        minLength={8}
+                        required
+                      />
+                    </fieldset>
+                    {error ? (
+                      <p>
+                        <mark>
+                          <small>{error}</small>
+                        </mark>
+                      </p>
+                    ) : (
+                      <br />
+                    )}
+                    <Button
+                      type="submit"
+                      aria-label="Sign in"
+                      name="_action"
+                      value="sign-in"
+                      className={buttonVariants({
+                        size: 'lg',
+                        variant: 'default',
+                        className: 'w-full rounded-lg',
+                      })}
+                    >
+                      Sign in
+                    </Button>
+                  </Form>
+                  <div>
+                    <p>
+                      <Link
+                        to="/account/recover"
+                        className={buttonVariants({
+                          size: 'lg',
+                          variant: 'link',
+                          className: 'm-0 p-0 leading-none -mb-2',
+                        })}
+                      >
+                        Forgot password →
+                      </Link>
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

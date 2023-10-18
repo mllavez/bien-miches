@@ -54,11 +54,6 @@
     --input: 0 0% 14.9%;
     --ring: 0 72.2% 50.6%;
   }
-  /*
-* --------------------------------------------------
-* slick carousel styles
-* --------------------------------------------------
-*/
 }
 
 input {
@@ -233,7 +228,7 @@ aside p {
 */
 .footer {
   background: var(--color-dark);
-  margin-top: auto;
+  /* margin-top: auto; */
 }
 
 .footer-menu-missing {
@@ -573,4 +568,13 @@ aside p {
     /*border: 1px solid hsl(var(--primary));
     border-radius: 8px;*/
   }
+}
+
+/*
+* --------------------------------------------------
+* Sign In
+* --------------------------------------------------
+*/
+.login [data-state='open'] {
+  background: hsl(var(--card));
 }

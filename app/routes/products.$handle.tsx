@@ -322,7 +322,11 @@ function ProductMain({
         product={product}
       />
       <div className="border-t-2 border-neutral-700 pt-7">
-        <ProductPrice selectedVariant={selectedVariant} />
+        {/* <span className="none md:inline-flex text-sm">Price:&nbsp;</span> */}
+        <ProductPrice
+          selectedVariant={selectedVariant}
+          className="text-4xl md:text-3xl"
+        />
       </div>
       <Suspense
         fallback={
@@ -369,7 +373,9 @@ function ProductMain({
         <br />
       </div>
       <div className="flex-col marker:w-full">
-        <h3 className="pb-2 text-lg font-bold">Details</h3>
+        <h3 className="pb-2 text-lg md:text-base md:inline-block font-bold">
+          Product Details
+        </h3>
         <div
           className="text-[15px]"
           dangerouslySetInnerHTML={{__html: descriptionHtml}}
@@ -388,7 +394,7 @@ function ProductPrice({
   className?: string;
 }) {
   return (
-    <div className="product-price">
+    <div className="product-price inline-flex">
       {selectedVariant?.compareAtPrice ? (
         <>
           <p>Sale</p>

@@ -37,8 +37,12 @@ export default function Homepage() {
   return (
     <div className="home">
       <PreFeaturedCollection />
-      <HeroIntro />
-      <UserSignUpSignIn />
+      <div className="md:hidden">
+        <HeroIntro />
+      </div>
+      <div className="md:hidden">
+        <UserSignUpSignIn />
+      </div>
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -47,16 +51,28 @@ export default function Homepage() {
 function PreFeaturedCollection() {
   return (
     <>
-      <div>
-        <div className="h-[75vw]"></div>
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-          src={bienMichesMobileBgVideo}
-          autoPlay
-          loop
-          muted
-        ></video>
+      <div className="h-[75vw] md:h-[600px] flex w-full">
+        <div className="hidden md:flex w-full justify-center">
+          <HeroIntro />
+          <div className="w-[35%] flex flex-col justify-center pb-[2%] align-center max-w-sm">
+            <img className="w-full" src={bienMichesBlackFullTriColorLogo} />
+          </div>
+        </div>
       </div>
+      <video
+        className="md:hidden absolute top-0 left-0 w-full object-cover z-[-1]"
+        src={bienMichesMobileBgVideo}
+        autoPlay
+        loop
+        muted
+      ></video>
+      <video
+        className="hidden md:flex md:min-h-[600px] absolute top-0 left-0 w-full md:mt-[96px] object-cover z-[-1]"
+        src={bienMichesDesktopBgVideo}
+        autoPlay
+        loop
+        muted
+      ></video>
     </>
   );
 }
@@ -158,7 +174,7 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery>;
 }) {
   return (
-    <section className="recommended-products flex flex-col items-center bg-gradient-to-b from-rose-700 to-25% py-6 gap-4">
+    <section className="recommended-products flex flex-col items-center bg-gradient-to-b from-rose-700 to-background to-25% py-6 gap-4">
       <h2 className="w-72 text-center text-white text-3xl font-normal font-['Denk One'] pb-9 pt-6 font-h1 uppercase">
         Shop Bien Miches
       </h2>
@@ -198,12 +214,12 @@ function RecommendedProducts({
 
 function HeroIntro() {
   return (
-    <div className="bg-background py-10">
-      <MaxWidthWrapper className="flex flex-col justify-center items-center gap-5 text-center">
+    <div className="bg-background py-10 md:py-0 md:bg-transparent flex flex-col justify-center">
+      <MaxWidthWrapper className="flex flex-col justify-center items-center gap-5 text-center md:pl-6 md:pr-2">
         <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl font-h1 drop-shadow-xl uppercase bg-gradient-to-r bg-clip-text text-transparent from-green-800 from-[percentage:0%_25%] via-white via-[percentage:35%_65%] to-rose-700 to-[percentage:75%_100%]">
           As authentic as it gets.
         </h1>
-        <div className="text-lg">
+        <div className="text-lg md:text-slate-200">
           Premium ingredients imported from Mexico.
           <br />
           <br />
