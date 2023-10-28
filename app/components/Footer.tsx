@@ -2,27 +2,39 @@ import {useMatches, NavLink} from '@remix-run/react';
 import type {FooterQuery} from 'storefrontapi.generated';
 import MaxWidthWrapper from './MaxWidthWrapper';
 import {Instagram} from 'lucide-react';
+import {RiTiktokLine} from 'react-icons/ri';
 import {useLoadScript} from '@shopify/hydrogen';
 import {cn} from '@/lib/utils';
 
 export function Footer({menu}: FooterQuery, className?: string) {
   return (
     <footer className={cn(className, 'footer')}>
-      <MaxWidthWrapper className="flex flex-col md:flex-row justify-between items-start py-9 gap-6">
-        <h5 className="text-base">
-          From Jalisco Mexico. Made in Santa Cruz, CA 🌴{' '}
-        </h5>
-        <div className="flex items-start gap-4">
-          <a
-            href="https://www.instagram.com/bienmiches/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Instagram className="w-6 h-6" />
-          </a>
+      <MaxWidthWrapper className="flex flex-col justify-between items-start py-9 gap-8">
+        <div className="flex flex-col items-center md:flex-row">
+          <div className="flex flex-col items-start gap-4">
+            <h5 className="text-base">
+              From Jalisco Mexico. Made in Santa Cruz, CA 🌴{' '}
+            </h5>
+            <div className="flex items-start gap-4">
+              <a
+                href="https://www.instagram.com/bienmiches/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram className="w-6 h-6" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@bienmiches"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <RiTiktokLine className="w-6 h-6" />
+              </a>
+            </div>
+          </div>
+          <div className="klaviyo-form-UQZGXM"></div>
+          <FooterMenu menu={menu} />
         </div>
-        <div className="klaviyo-form-UQZGXM"></div>
-        <FooterMenu menu={menu} />
         <div className="text-xs text-stone-300 text-center w-full">
           © 2023-2023, BienMiches.com. or its affiliates
         </div>

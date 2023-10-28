@@ -283,7 +283,7 @@ export default function Login() {
                         autoFocus
                       />
                       <Input
-                        className="h-12 first-letter:text-stone-300"
+                        className="h-12 text-stone-300"
                         id="password"
                         name="password"
                         type="password"
