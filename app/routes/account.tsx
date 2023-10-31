@@ -1,6 +1,7 @@
 import {Form, NavLink, Outlet, useLoaderData} from '@remix-run/react';
 import {json, redirect, type LoaderArgs} from '@shopify/remix-oxygen';
 import type {CustomerFragment} from 'storefrontapi.generated';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
 
 export function shouldRevalidate() {
   return true;
@@ -86,7 +87,6 @@ export default function Acccount() {
   return (
     <AccountLayout customer={customer as CustomerFragment}>
       <br />
-      <br />
       <Outlet context={{customer}} />
     </AccountLayout>
   );
@@ -106,11 +106,13 @@ function AccountLayout({
     : 'Account Details';
 
   return (
-    <div className="account">
-      <h1>{heading}</h1>
+    <div className="account w-full py-4">
+      <MaxWidthWrapper>
+        <h1>{heading}</h1>
+      </MaxWidthWrapper>
       <br />
       <AccountMenu />
-      {children}
+      <MaxWidthWrapper className="pt-4">{children}</MaxWidthWrapper>
     </div>
   );
 }
@@ -123,35 +125,52 @@ function AccountMenu() {
     isActive: boolean;
     isPending: boolean;
   }) {
-    return {
-      fontWeight: isActive ? 'bold' : undefined,
-      color: isPending ? 'grey' : 'white',
-    };
+    let navLinkStyle = new Object({
+      textDecoration: 'none',
+      lineHeight: '1',
+      width: 'auto',
+      textAlign: 'center',
+    });
+    if (isActive) {
+      return {
+        color: '#bd002f',
+        borderBottom: '1px solid #bd002f',
+        paddingBottom: '.75rem',
+        ...navLinkStyle,
+      };
+    }
+    return navLinkStyle;
   }
 
   return (
-    <nav role="navigation">
-      <NavLink to="/account/orders" style={isActiveStyle}>
-        Orders &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/profile" style={isActiveStyle}>
-        &nbsp; Profile &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/addresses" style={isActiveStyle}>
-        &nbsp; Addresses &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <Logout />
+    <nav role="navigation" className="border-t-[1px] border-zinc-700 pt-2.5">
+      <MaxWidthWrapper className="flex justify-between">
+        <NavLink to="/account/orders" style={isActiveStyle}>
+          Orders
+        </NavLink>
+        |
+        <NavLink to="/account/profile" style={isActiveStyle}>
+          Profile
+        </NavLink>
+        |
+        <NavLink to="/account/addresses" style={isActiveStyle}>
+          Addresses
+        </NavLink>
+        |
+        <Logout />
+      </MaxWidthWrapper>
     </nav>
   );
 }
 
 function Logout() {
   return (
-    <Form className="account-logout" method="POST" action="/account/logout">
-      &nbsp;<button type="submit">Sign out</button>
+    <Form
+      className="account-logout leading-none w-auto text-center"
+      method="POST"
+      action="/account/logout"
+    >
+      <button type="submit">Sign out</button>
     </Form>
   );
 }

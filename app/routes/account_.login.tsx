@@ -30,6 +30,7 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card';
+import {cn} from '@/lib/utils';
 
 type ActionResponse = {
   error: string | null;
@@ -239,9 +240,11 @@ export default function Login() {
 
   return (
     <div className="my-0 mx-auto max-w-[400px] mt-1">
-      <h3 className="text-xl font-semibold tracking-tight pb-2 leading-7">
-        Ximopanōltih, Bienvenidos, Welcome
-      </h3>
+      <MaxWidthWrapper>
+        <h3 className="text-xl font-semibold tracking-tight pb-2 leading-7">
+          Ximopanōltih, Bienvenidos, Welcome
+        </h3>
+      </MaxWidthWrapper>
       <Card className="">
         <CardContent className="p-0">
           <div className="login w-full">
@@ -401,11 +404,13 @@ export default function Login() {
                     <p>
                       <Link
                         to="/account/recover"
-                        className={buttonVariants({
-                          size: 'lg',
-                          variant: 'link',
-                          className: 'm-0 p-0 leading-none -mb-2',
-                        })}
+                        className={cn(
+                          buttonVariants({
+                            size: 'lg',
+                            variant: 'link',
+                            className: 'm-0 p-0 leading-none -mb-2',
+                          }),
+                        )}
                       >
                         Forgot password →
                       </Link>
