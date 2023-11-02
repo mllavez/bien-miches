@@ -75,9 +75,7 @@ export function Layout({
       <main className="">{children}</main>
       <Suspense>
         <Await resolve={footer}>
-          {(footer) => (
-            <Footer menu={footer.menu} className="md:bg-transparent" />
-          )}
+          {(footer) => <Footer menu={footer.menu} />}
         </Await>
       </Suspense>
     </>
