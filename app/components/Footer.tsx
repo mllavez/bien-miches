@@ -6,9 +6,9 @@ import {RiTiktokLine} from 'react-icons/ri';
 import {useLoadScript} from '@shopify/hydrogen';
 import {cn} from '@/lib/utils';
 
-export function Footer({menu}: FooterQuery, className?: string) {
+export function Footer({menu}: FooterQuery) {
   return (
-    <footer className={cn(className, 'footer')}>
+    <footer className="footer">
       <MaxWidthWrapper className="flex flex-col justify-between items-start py-9 gap-8">
         <div className="flex flex-col items-center md:flex-row">
           <div className="flex flex-col items-start gap-4">

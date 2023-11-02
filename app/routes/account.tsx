@@ -105,12 +105,12 @@ function AccountLayout({
     : 'Account Details';
 
   return (
-    <div className="account w-full">
+    <div className="account w-full pb-4">
       <MaxWidthWrapper className="pt-3 pb-2">
         <h1 className="text-3xl">{heading}</h1>
       </MaxWidthWrapper>
       <AccountMenu />
-      <div className="h-2 bg-gradient-to-b from-[rgba(0,0,0,0.6)] to-[rgba(255,255,255,0)]"></div>
+      <div className="h-2 bg-gradient-to-b from-[rgba(0,0,0,0.6)] to-[rgba(255,255,255,0)] pb-4"></div>
       {children}
     </div>
   );

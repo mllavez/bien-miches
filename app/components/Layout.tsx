@@ -38,11 +38,11 @@ export function Layout({
   if (PLAIN_HEADER_PATHS.some((path) => location.pathname.startsWith(path))) {
     return (
       <>
-        <MaxWidthWrapper className="bg-black">
-          <div className="h-[48px] flex items-center">
+        <div className="h-[48px] flex items-center bg-black">
+          <MaxWidthWrapper>
             <Logo />
-          </div>
-        </MaxWidthWrapper>
+          </MaxWidthWrapper>
+        </div>
         <main className="py-2.5">{children}</main>
         <Suspense>
           <Await resolve={footer}>

@@ -531,6 +531,9 @@ aside p {
   }
 }
 
+.account-nav a {
+  text-decoration: none !important;
+}
 /*
 * --------------------------------------------------
 * slick carousel styles

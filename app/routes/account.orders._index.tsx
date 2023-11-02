@@ -1,10 +1,17 @@
 import {Link, useLoaderData, type V2_MetaFunction} from '@remix-run/react';
-import {Money, Pagination, getPaginationVariables} from '@shopify/hydrogen';
+import {
+  Money,
+  Pagination,
+  getPaginationVariables,
+  Image,
+} from '@shopify/hydrogen';
 import {json, redirect, type LoaderArgs} from '@shopify/remix-oxygen';
+import {ChevronRight} from 'lucide-react';
 import type {
   CustomerOrdersFragment,
   OrderItemFragment,
 } from 'storefrontapi.generated';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
 
 export const meta: V2_MetaFunction = () => {
   return [{title: 'Orders'}];
@@ -51,10 +58,10 @@ export default function Orders() {
   const {orders, numberOfOrders} = customer;
   return (
     <div className="orders">
-      <h2>
+      {/* <h2>
         Orders <small>({numberOfOrders})</small>
       </h2>
-      <br />
+      <br /> */}
       {orders.nodes.length ? <OrdersTable orders={orders} /> : <EmptyOrders />}
     </div>
   );
@@ -62,7 +69,7 @@ export default function Orders() {
 
 function OrdersTable({orders}: Pick<CustomerOrdersFragment, 'orders'>) {
   return (
-    <div className="acccount-orders">
+    <div className="acccount-orders w-full">
       {orders?.nodes.length ? (
         <Pagination connection={orders}>
           {({nodes, isLoading, PreviousLink, NextLink}) => {
@@ -101,20 +108,36 @@ function EmptyOrders() {
 }
 
 function OrderItem({order}: {order: OrderItemFragment}) {
+  const lineItem = order.lineItems.nodes[0];
+  const variant = lineItem?.variant;
+  const image = variant?.image;
   return (
-    <>
-      <fieldset>
-        <Link to={`/account/orders/${order.id}`}>
-          <strong>#{order.orderNumber}</strong>
-        </Link>
-        <p>{new Date(order.processedAt).toDateString()}</p>
-        <p>{order.financialStatus}</p>
-        <p>{order.fulfillmentStatus}</p>
-        <Money data={order.currentTotalPrice} />
-        <Link to={`/account/orders/${btoa(order.id)}`}>View Order →</Link>
-      </fieldset>
-      <br />
-    </>
+    <div className="bg-card ">
+      <Link to={`/account/orders/${btoa(order.id)}`}>
+        <div className="flex w-full items-center p-3.5">
+          {image?.url && (
+            <div className="pr-4">
+              <Image
+                src={image.url}
+                alt={image.altText ?? ''}
+                width={96}
+                height={96}
+              />
+            </div>
+          )}
+          <fieldset className="flex">
+            <Link to={`/account/orders/${order.id}`}>
+              <strong>#{order.orderNumber}</strong>
+            </Link>
+            {/* <p>{new Date(order.processedAt).toDateString()}</p>
+            <p>{order.financialStatus}</p> */}
+            <p>{order.fulfillmentStatus}</p>
+            {/* <Money data={order.currentTotalPrice} /> */}
+          </fieldset>
+          <ChevronRight className="absolute right-3" />
+        </div>
+      </Link>
+    </div>
   );
 }
 
