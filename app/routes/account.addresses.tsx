@@ -13,6 +13,16 @@ import {
   useOutletContext,
   type V2_MetaFunction,
 } from '@remix-run/react';
+import {Input} from '@/components/ui/input';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
+import {Button, buttonVariants} from '@/components/ui/button';
+import {cn} from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export type ActionResponse = {
   addressId?: string | null;
@@ -220,23 +230,32 @@ export default function Addresses() {
 
   return (
     <div className="account-addresses">
-      <h2>Addresses</h2>
-      <br />
       {!addresses.nodes.length ? (
         <p>You have no addresses saved.</p>
       ) : (
-        <div>
-          <div>
-            <legend>Create address</legend>
-            <NewAddressForm />
+        <div className="flex flex-col gap-4">
+          <div className="bg-card">
+            <MaxWidthWrapper className="flex flex-col">
+              <Accordion type="single" collapsible>
+                <AccordionItem value="add-new-address">
+                  <AccordionTrigger>
+                    <legend className="mb-3">Add new address</legend>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <NewAddressForm />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </MaxWidthWrapper>
           </div>
-          <br />
-          <hr />
-          <br />
-          <ExistingAddresses
-            addresses={addresses}
-            defaultAddress={defaultAddress}
-          />
+          <div className="bg-card py-3.5">
+            <MaxWidthWrapper className="flex flex-col">
+              <ExistingAddresses
+                addresses={addresses}
+                defaultAddress={defaultAddress}
+              />
+            </MaxWidthWrapper>
+          </div>
         </div>
       )}
     </div>
@@ -262,13 +281,20 @@ function NewAddressForm() {
     <AddressForm address={newAddress} defaultAddress={null}>
       {({stateForMethod}) => (
         <div>
-          <button
+          <Button
             disabled={stateForMethod('POST') !== 'idle'}
             formMethod="POST"
             type="submit"
+            className={cn(
+              buttonVariants({
+                size: 'lg',
+                variant: 'default',
+                className: 'w-full',
+              }),
+            )}
           >
             {stateForMethod('POST') !== 'idle' ? 'Creating' : 'Create'}
-          </button>
+          </Button>
         </div>
       )}
     </AddressForm>
@@ -281,7 +307,7 @@ function ExistingAddresses({
 }: Pick<CustomerFragment, 'addresses' | 'defaultAddress'>) {
   return (
     <div>
-      <legend>Existing addresses</legend>
+      <legend className="mb-3">Existing addresses</legend>
       {addresses.nodes.map((address) => (
         <AddressForm
           key={address.id}
@@ -289,21 +315,35 @@ function ExistingAddresses({
           defaultAddress={defaultAddress}
         >
           {({stateForMethod}) => (
-            <div>
-              <button
-                disabled={stateForMethod('PUT') !== 'idle'}
-                formMethod="PUT"
-                type="submit"
-              >
-                {stateForMethod('PUT') !== 'idle' ? 'Saving' : 'Save'}
-              </button>
-              <button
+            <div className="flex flex-col gap-4">
+              <Button
                 disabled={stateForMethod('DELETE') !== 'idle'}
                 formMethod="DELETE"
                 type="submit"
+                className={cn(
+                  buttonVariants({
+                    size: 'lg',
+                    variant: 'destructive',
+                    className: 'w-full',
+                  }),
+                )}
               >
                 {stateForMethod('DELETE') !== 'idle' ? 'Deleting' : 'Delete'}
-              </button>
+              </Button>
+              <Button
+                disabled={stateForMethod('PUT') !== 'idle'}
+                formMethod="PUT"
+                type="submit"
+                className={cn(
+                  buttonVariants({
+                    size: 'lg',
+                    variant: 'default',
+                    className: 'w-full',
+                  }),
+                )}
+              >
+                {stateForMethod('PUT') !== 'idle' ? 'Saving' : 'Save'}
+              </Button>
             </div>
           )}
         </AddressForm>
@@ -331,10 +371,9 @@ export function AddressForm({
   const isDefaultAddress = defaultAddress?.id === address.id;
   return (
     <Form id={address.id}>
-      <fieldset>
+      <fieldset className="flex flex-col gap-4">
         <input type="hidden" name="addressId" defaultValue={address.id} />
-        <label htmlFor="firstName">First name*</label>
-        <input
+        <Input
           aria-label="First name"
           autoComplete="given-name"
           defaultValue={address?.firstName ?? ''}
@@ -344,19 +383,17 @@ export function AddressForm({
           required
           type="text"
         />
-        <label htmlFor="lastName">Last name*</label>
-        <input
+        <Input
           aria-label="Last name"
           autoComplete="family-name"
           defaultValue={address?.lastName ?? ''}
           id="lastName"
           name="lastName"
-          placeholder="Last name"
+          placeholder="Last name*"
           required
           type="text"
         />
-        <label htmlFor="company">Company</label>
-        <input
+        <Input
           aria-label="Company"
           autoComplete="organization"
           defaultValue={address?.company ?? ''}
@@ -365,8 +402,7 @@ export function AddressForm({
           placeholder="Company"
           type="text"
         />
-        <label htmlFor="address1">Address line*</label>
-        <input
+        <Input
           aria-label="Address line 1"
           autoComplete="address-line1"
           defaultValue={address?.address1 ?? ''}
@@ -376,8 +412,7 @@ export function AddressForm({
           required
           type="text"
         />
-        <label htmlFor="address2">Address line 2</label>
-        <input
+        <Input
           aria-label="Address line 2"
           autoComplete="address-line2"
           defaultValue={address?.address2 ?? ''}
@@ -386,52 +421,47 @@ export function AddressForm({
           placeholder="Address line 2"
           type="text"
         />
-        <label htmlFor="city">City*</label>
-        <input
+        <Input
           aria-label="City"
           autoComplete="address-level2"
           defaultValue={address?.city ?? ''}
           id="city"
           name="city"
-          placeholder="City"
+          placeholder="City*"
           required
           type="text"
         />
-        <label htmlFor="province">State / Province*</label>
-        <input
+        <Input
           aria-label="State"
           autoComplete="address-level1"
           defaultValue={address?.province ?? ''}
           id="province"
           name="province"
-          placeholder="State / Province"
+          placeholder="State / Province*"
           required
           type="text"
         />
-        <label htmlFor="zip">Zip / Postal Code*</label>
-        <input
+        <Input
           aria-label="Zip"
           autoComplete="postal-code"
           defaultValue={address?.zip ?? ''}
           id="zip"
           name="zip"
-          placeholder="Zip / Postal Code"
+          placeholder="Zip / Postal Code*"
           required
           type="text"
         />
-        <label htmlFor="country">Country*</label>
-        <input
+        <Input
           aria-label="Country"
           autoComplete="country-name"
           defaultValue={address?.country ?? ''}
           id="country"
           name="country"
-          placeholder="Country"
+          placeholder="Country*"
           required
           type="text"
         />
-        <label htmlFor="phone">Phone</label>
-        <input
+        <Input
           aria-label="Phone"
           autoComplete="tel"
           defaultValue={address?.phone ?? ''}
@@ -448,7 +478,7 @@ export function AddressForm({
             name="defaultAddress"
             type="checkbox"
           />
-          <label htmlFor="defaultAddress">Set as default address</label>
+          <label htmlFor="defaultAddress"> &nbsp; Set as default address</label>
         </div>
         {error ? (
           <p>
@@ -457,7 +487,7 @@ export function AddressForm({
             </mark>
           </p>
         ) : (
-          <br />
+          <></>
         )}
         {children({
           stateForMethod: (method) => (formMethod === method ? state : 'idle'),

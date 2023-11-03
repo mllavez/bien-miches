@@ -4,6 +4,8 @@ import {Money, Image, flattenConnection} from '@shopify/hydrogen';
 import type {OrderLineItemFullFragment} from 'storefrontapi.generated';
 import {ChevronLeft} from 'lucide-react';
 import MaxWidthWrapper from '~/components/MaxWidthWrapper';
+import {Button, buttonVariants} from '@/components/ui/button';
+import {cn} from '@/lib/utils';
 
 export const meta: V2_MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Order ${data?.order?.name}`}];
@@ -65,27 +67,28 @@ export default function OrderRoute() {
           Your Orders
         </MaxWidthWrapper>
       </Link>
-      <div className="account-order">
-        <h2>Order {order.name}</h2>
-        <p>Placed on {new Date(order.processedAt!).toDateString()}</p>
-        <br />
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lineItems.map((lineItem, lineItemIndex) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <OrderLineRow key={lineItemIndex} lineItem={lineItem} />
-              ))}
-            </tbody>
-            <tfoot>
+      <div className="account-order grid gap-4">
+        <div className="bg-card">
+          <MaxWidthWrapper className="flex flex-col">
+            <h2 className="text-3xl my-3">Order details</h2>
+            <h3 className="text-xl font-semibold">Order {order.name}</h3>
+            <p className="text-sm">
+              {new Date(order.processedAt!).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit',
+              })}
+            </p>
+            <div>
+              <div className="py-5 grid gap-5">
+                {lineItems.map((lineItem, lineItemIndex) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <OrderLineRow key={lineItemIndex} lineItem={lineItem} />
+                ))}
+              </div>
+            </div>
+            <hr className="bg-zinc-700 h-0.5" />
+            <div className="py-5">
               {((discountValue && discountValue.amount) ||
                 discountPercentage) && (
                 <tr>
@@ -104,45 +107,34 @@ export default function OrderRoute() {
                   </td>
                 </tr>
               )}
-              <tr>
-                <th scope="row" colSpan={3}>
+              <div className="a-row flex">
+                <div className="a-column w-[50%]">
                   <p>Subtotal</p>
-                </th>
-                <th scope="row">
-                  <p>Subtotal</p>
-                </th>
-                <td>
+                </div>
+                <div className="a-column w-[50%] text-right">
                   <Money data={order.subtotalPriceV2!} />
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" colSpan={3}>
-                  Tax
-                </th>
-                <th scope="row">
-                  <p>Tax</p>
-                </th>
-                <td>
+                </div>
+              </div>
+              <div className="row flex">
+                <div className="a-column w-[50%]">Tax</div>
+                <div className="a-column w-[50%] text-right">
                   <Money data={order.totalTaxV2!} />
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" colSpan={3}>
-                  Total
-                </th>
-                <th scope="row">
-                  <p>Total</p>
-                </th>
-                <td>
+                </div>
+              </div>
+              <div className="a-row flex">
+                <div className="a-column w-[50%]">Total</div>
+                <div className="a-column w-[50%] text-right">
                   <Money data={order.totalPriceV2!} />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-          <div>
-            <h3>Shipping Address</h3>
+                </div>
+              </div>
+            </div>
+          </MaxWidthWrapper>
+        </div>
+        <div className="bg-card py-7">
+          <MaxWidthWrapper className="flex flex-col gap-4">
+            <h3 className="text-xl">Shipping Address</h3>
             {order?.shippingAddress ? (
-              <address>
+              <address className="not-italic">
                 <p>
                   {order.shippingAddress.firstName &&
                     order.shippingAddress.firstName + ' '}
@@ -159,17 +151,27 @@ export default function OrderRoute() {
             ) : (
               <p>No shipping address defined</p>
             )}
-            <h3>Status</h3>
+            <h3 className="text-xl">Status</h3>
             <div>
               <p>{order.fulfillmentStatus}</p>
             </div>
-          </div>
+          </MaxWidthWrapper>
         </div>
-        <br />
+
         <p>
-          <a target="_blank" href={order.statusUrl} rel="noreferrer">
+          <Link
+            to={order.statusUrl}
+            rel="noreferrer"
+            className={cn(
+              buttonVariants({
+                size: 'lg',
+                variant: 'default',
+                className: 'w-full',
+              }),
+            )}
+          >
             View Order Status →
-          </a>
+          </Link>
         </p>
       </div>
     </>
@@ -178,30 +180,41 @@ export default function OrderRoute() {
 
 function OrderLineRow({lineItem}: {lineItem: OrderLineItemFullFragment}) {
   return (
-    <tr key={lineItem.variant!.id}>
-      <td>
-        <div>
-          <Link to={`/products/${lineItem.variant!.product!.handle}`}>
-            {lineItem?.variant?.image && (
-              <div>
-                <Image data={lineItem.variant.image} width={96} height={96} />
-              </div>
-            )}
-          </Link>
-          <div>
-            <p>{lineItem.title}</p>
-            <small>{lineItem.variant!.title}</small>
-          </div>
+    <div key={lineItem.variant!.id} className="a-row flex">
+      <div className="a-col w-[21.25%] mr-[5%] float-left min-h-[0.1rem] overflow-visible">
+        <Link
+          to={`/products/${lineItem.variant!.product!.handle}`}
+          className="p-0"
+        >
+          {lineItem?.variant?.image && (
+            <div className="relative inline-block">
+              <Image
+                data={lineItem.variant.image}
+                width={96}
+                height={96}
+                className="rounded-md"
+              />
+            </div>
+          )}
+        </Link>
+      </div>
+      <div className="inline-flex w-[73.75%]">
+        <div className="leading-snug p-0 w-[75%] mr-[5%] min-h-[0.1rem] overflow-visible">
+          <p>
+            {lineItem.quantity > 1 ? `${lineItem.quantity} x ` : ``}{' '}
+            {lineItem.title}
+          </p>
+          <p>{lineItem.variant!.title}</p>
         </div>
-      </td>
-      <td>
-        <Money data={lineItem.variant!.price!} />
-      </td>
-      <td>{lineItem.quantity}</td>
-      <td>
-        <Money data={lineItem.discountedTotalPrice!} />
-      </td>
-    </tr>
+        <div className="w-[20%] float-right mr-0 text-right">
+          {!lineItem.discountedTotalPrice ? (
+            <Money data={lineItem.variant!.price!} />
+          ) : (
+            <Money data={lineItem.discountedTotalPrice!} />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
