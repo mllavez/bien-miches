@@ -20,6 +20,7 @@ export default async function handleRequest(
       'https://monorail-edge.shopifysvc.com',
       'https://static-forms.klaviyo.com',
       'https://static.klaviyo.com', //✅
+      'https://static-tracking.klaviyo.com',
     ],
     scriptSrc: [
       "'self'",
