@@ -45,6 +45,18 @@ export default async function handleRequest(
       'https://fast.a.klaviyo.com',
       'https://monorail-edge.shopifysvc.com',
     ],
+    connectSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+      'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com',
+      'https://monorail-edge.shopifysvc.com',
+      'https://static-forms.klaviyo.com',
+      'https://static.klaviyo.com', //✅
+      'https://static-tracking.klaviyo.com',
+      'https://fast.a.klaviyo.com',
+    ],
   });
 
   const body = await renderToReadableStream(
