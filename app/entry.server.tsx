@@ -17,14 +17,17 @@ export default async function handleRequest(
       'https://shopify.com',
       'https://fonts.googleapis.com',
       'https://fonts.gstatic.com',
+      'https://monorail-edge.shopifysvc.com',
     ],
     scriptSrc: [
       "'self'",
       "'unsafe-eval'",
       "'unsafe-inline'",
+      'https://cdn.shopify.com',
       'https://static.klaviyo.com', //✅
       'https://static-tracking.klaviyo.com', //✅
       'https://cdn.judge.me',
+      'https://monorail-edge.shopifysvc.com',
     ],
     styleSrc: [
       "'self'",
