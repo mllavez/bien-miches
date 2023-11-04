@@ -241,7 +241,7 @@ export default function Login() {
   return (
     <div className="my-0 mx-auto max-w-[400px] mt-1">
       <MaxWidthWrapper>
-        <h3 className="text-xl font-semibold tracking-tight pb-2 leading-7">
+        <h3 className="text-xl font-semibold tracking-tight pb-2 my-3 leading-7">
           Ximopanōltih, Bienvenidos, Welcome
         </h3>
       </MaxWidthWrapper>
