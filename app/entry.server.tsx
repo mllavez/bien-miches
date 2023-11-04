@@ -18,6 +18,8 @@ export default async function handleRequest(
       'https://fonts.googleapis.com',
       'https://fonts.gstatic.com',
       'https://monorail-edge.shopifysvc.com',
+      'https://static-forms.klaviyo.com',
+      'https://static.klaviyo.com', //✅
     ],
     scriptSrc: [
       "'self'",
@@ -28,6 +30,7 @@ export default async function handleRequest(
       'https://static-tracking.klaviyo.com', //✅
       'https://cdn.judge.me',
       'https://monorail-edge.shopifysvc.com',
+      'https://static-forms.klaviyo.com',
     ],
     styleSrc: [
       "'self'",
