@@ -21,6 +21,7 @@ export default async function handleRequest(
       'https://static-forms.klaviyo.com',
       'https://static.klaviyo.com', //✅
       'https://static-tracking.klaviyo.com',
+      'https://fast.a.klaviyo.com',
     ],
     scriptSrc: [
       "'self'",
@@ -32,6 +33,7 @@ export default async function handleRequest(
       'https://cdn.judge.me',
       'https://monorail-edge.shopifysvc.com',
       'https://static-forms.klaviyo.com',
+      'https://fast.a.klaviyo.com',
     ],
     styleSrc: [
       "'self'",
@@ -40,6 +42,8 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://static.klaviyo.com', //✅
       'https://static-tracking.klaviyo.com', //✅
+      'https://fast.a.klaviyo.com',
+      'https://monorail-edge.shopifysvc.com',
     ],
   });
 
