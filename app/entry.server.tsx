@@ -56,6 +56,7 @@ export default async function handleRequest(
       'https://static.klaviyo.com', //✅
       'https://static-tracking.klaviyo.com',
       'https://fast.a.klaviyo.com',
+      'https://a.klaviyo.com',
     ],
   });
 
