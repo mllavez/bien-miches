@@ -86,7 +86,6 @@ export default function Acccount() {
 
   return (
     <AccountLayout customer={customer as CustomerFragment}>
-      <br />
       <Outlet context={{customer}} />
     </AccountLayout>
   );
@@ -106,13 +105,13 @@ function AccountLayout({
     : 'Account Details';
 
   return (
-    <div className="account w-full py-4">
-      <MaxWidthWrapper>
-        <h1>{heading}</h1>
+    <div className="account w-full pb-4">
+      <MaxWidthWrapper className="pt-3 pb-2">
+        <h1 className="text-3xl">{heading}</h1>
       </MaxWidthWrapper>
-      <br />
       <AccountMenu />
-      <MaxWidthWrapper className="pt-4">{children}</MaxWidthWrapper>
+      <div className="h-2 bg-gradient-to-b from-[rgba(0,0,0,0.6)] to-[rgba(255,255,255,0)] pb-4"></div>
+      {children}
     </div>
   );
 }
@@ -125,38 +124,39 @@ function AccountMenu() {
     isActive: boolean;
     isPending: boolean;
   }) {
-    let navLinkStyle = new Object({
-      textDecoration: 'none',
-      lineHeight: '1',
-      width: 'auto',
-      textAlign: 'center',
-    });
-    if (isActive) {
-      return {
-        color: '#bd002f',
-        borderBottom: '1px solid #bd002f',
-        paddingBottom: '.75rem',
-        ...navLinkStyle,
-      };
-    }
-    return navLinkStyle;
+    return {
+      fontWeight: isActive ? 'bold' : undefined,
+      color: isPending ? 'grey' : 'white',
+    };
   }
 
   return (
-    <nav role="navigation" className="border-t-[1px] border-zinc-700 pt-2.5">
-      <MaxWidthWrapper className="flex justify-between">
-        <NavLink to="/account/orders" style={isActiveStyle}>
+    <nav
+      role="navigation"
+      className="account-nav border-t-[1px] border-zinc-700"
+    >
+      <MaxWidthWrapper className="flex w-full justify-between">
+        <NavLink
+          to="/account/orders"
+          style={isActiveStyle}
+          className="py-2 w-full text-center"
+        >
           Orders
         </NavLink>
-        |
-        <NavLink to="/account/profile" style={isActiveStyle}>
+        <NavLink
+          to="/account/profile"
+          style={isActiveStyle}
+          className="py-2 w-full text-center"
+        >
           Profile
         </NavLink>
-        |
-        <NavLink to="/account/addresses" style={isActiveStyle}>
+        <NavLink
+          to="/account/addresses"
+          style={isActiveStyle}
+          className="py-2 w-full text-center"
+        >
           Addresses
         </NavLink>
-        |
         <Logout />
       </MaxWidthWrapper>
     </nav>
@@ -166,11 +166,11 @@ function AccountMenu() {
 function Logout() {
   return (
     <Form
-      className="account-logout leading-none w-auto text-center"
+      className="account-logout py-2 w-full text-center"
       method="POST"
       action="/account/logout"
     >
-      <button type="submit">Sign out</button>
+      &nbsp;<button type="submit">Sign out</button>
     </Form>
   );
 }

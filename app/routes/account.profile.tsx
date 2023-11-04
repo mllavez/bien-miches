@@ -13,6 +13,10 @@ import {
   useOutletContext,
   type V2_MetaFunction,
 } from '@remix-run/react';
+import {Input} from '@/components/ui/input';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
+import {Button, buttonVariants} from '@/components/ui/button';
+import {cn} from '@/lib/utils';
 
 export type ActionResponse = {
   error: string | null;
@@ -115,115 +119,123 @@ export default function AccountProfile() {
 
   return (
     <div className="account-profile">
-      <h2>My profile</h2>
-      <br />
-      <Form method="PUT">
-        <legend>Personal information</legend>
-        <fieldset>
-          <label htmlFor="firstName">First name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            autoComplete="given-name"
-            placeholder="First name"
-            aria-label="First name"
-            defaultValue={customer.firstName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="lastName">Last name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            autoComplete="family-name"
-            placeholder="Last name"
-            aria-label="Last name"
-            defaultValue={customer.lastName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="phone">Mobile</label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            placeholder="Mobile"
-            aria-label="Mobile"
-            defaultValue={customer.phone ?? ''}
-          />
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Email address"
-            aria-label="Email address"
-            defaultValue={customer.email ?? ''}
-          />
-          <div className="account-profile-marketing">
-            <input
-              id="acceptsMarketing"
-              name="acceptsMarketing"
-              type="checkbox"
-              placeholder="Accept marketing"
-              aria-label="Accept marketing"
-              defaultChecked={customer.acceptsMarketing}
-            />
-            <label htmlFor="acceptsMarketing">
-              &nbsp; Subscribed to marketing communications
-            </label>
-          </div>
-        </fieldset>
-        <br />
-        <legend>Change password (optional)</legend>
-        <fieldset>
-          <label htmlFor="currentPassword">Current password</label>
-          <input
-            id="currentPassword"
-            name="currentPassword"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Current password"
-            aria-label="Current password"
-            minLength={8}
-          />
-
-          <label htmlFor="newPassword">New password</label>
-          <input
-            id="newPassword"
-            name="newPassword"
-            type="password"
-            placeholder="New password"
-            aria-label="New password"
-            minLength={8}
-          />
-
-          <label htmlFor="newPasswordConfirm">New password (confirm)</label>
-          <input
-            id="newPasswordConfirm"
-            name="newPasswordConfirm"
-            type="password"
-            placeholder="New password (confirm)"
-            aria-label="New password confirm"
-            minLength={8}
-          />
-          <small>Passwords must be at least 8 characters.</small>
-        </fieldset>
-        {action?.error ? (
-          <p>
-            <mark>
-              <small>{action.error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
-        </button>
+      <Form method="PUT" className="flex flex-col gap-4 ">
+        <div className="bg-card">
+          <MaxWidthWrapper className="flex flex-col py-3.5">
+            <legend>Personal information</legend>
+            <fieldset className="flex flex-col gap-4">
+              <Input
+                id="firstName"
+                name="firstName"
+                type="text"
+                autoComplete="given-name"
+                placeholder="First name"
+                aria-label="First name"
+                defaultValue={customer.firstName ?? ''}
+                minLength={2}
+              />
+              <Input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                placeholder="Last name"
+                aria-label="Last name"
+                defaultValue={customer.lastName ?? ''}
+                minLength={2}
+              />
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                placeholder="Mobile"
+                aria-label="Mobile"
+                defaultValue={customer.phone ?? ''}
+              />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="Email address"
+                aria-label="Email address"
+                defaultValue={customer.email ?? ''}
+              />
+              <div className="account-profile-marketing">
+                <input
+                  id="acceptsMarketing"
+                  name="acceptsMarketing"
+                  type="checkbox"
+                  placeholder="Accept marketing"
+                  aria-label="Accept marketing"
+                  defaultChecked={customer.acceptsMarketing}
+                />
+                <label htmlFor="acceptsMarketing">
+                  &nbsp; Subscribed to marketing communications
+                </label>
+              </div>
+            </fieldset>
+          </MaxWidthWrapper>
+        </div>
+        <div className="bg-card">
+          <MaxWidthWrapper className="flex flex-col py-3.5">
+            <legend>Change password (optional)</legend>
+            <fieldset className="flex flex-col gap-4">
+              <Input
+                id="currentPassword"
+                name="currentPassword"
+                type="password"
+                autoComplete="current-password"
+                placeholder="Current password"
+                aria-label="Current password"
+                minLength={8}
+              />
+              <Input
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                placeholder="New password"
+                aria-label="New password"
+                minLength={8}
+              />
+              <Input
+                id="newPasswordConfirm"
+                name="newPasswordConfirm"
+                type="password"
+                placeholder="New password (confirm)"
+                aria-label="New password confirm"
+                minLength={8}
+              />
+              <small>Passwords must be at least 8 characters.</small>
+            </fieldset>
+            {action?.error ? (
+              <p>
+                <mark>
+                  <small>{action.error}</small>
+                </mark>
+              </p>
+            ) : (
+              <></>
+            )}
+          </MaxWidthWrapper>
+        </div>
+        <MaxWidthWrapper>
+          <Button
+            type="submit"
+            disabled={state !== 'idle'}
+            className={cn(
+              buttonVariants({
+                size: 'lg',
+                variant: 'default',
+                className: 'w-full',
+              }),
+            )}
+          >
+            {state !== 'idle' ? 'Updating' : 'Update'}
+          </Button>
+        </MaxWidthWrapper>
       </Form>
     </div>
   );

@@ -38,11 +38,11 @@ export function Layout({
   if (PLAIN_HEADER_PATHS.some((path) => location.pathname.startsWith(path))) {
     return (
       <>
-        <MaxWidthWrapper className="bg-black">
-          <div className="h-[48px] flex items-center">
+        <div className="h-[48px] flex items-center bg-black">
+          <MaxWidthWrapper>
             <Logo />
-          </div>
-        </MaxWidthWrapper>
+          </MaxWidthWrapper>
+        </div>
         <main className="py-2.5">{children}</main>
         <Suspense>
           <Await resolve={footer}>
@@ -75,9 +75,7 @@ export function Layout({
       <main className="">{children}</main>
       <Suspense>
         <Await resolve={footer}>
-          {(footer) => (
-            <Footer menu={footer.menu} className="md:bg-transparent" />
-          )}
+          {(footer) => <Footer menu={footer.menu} />}
         </Await>
       </Suspense>
     </>
