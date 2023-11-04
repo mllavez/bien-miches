@@ -59,20 +59,31 @@ function PreFeaturedCollection() {
           </div>
         </div>
       </div>
-      <video
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `<video
         className="md:hidden absolute top-0 left-0 w-full object-cover z-[-1]"
-        src={bienMichesMobileBgVideo}
+        src=${bienMichesMobileBgVideo}
         autoPlay
         loop
         muted
-      ></video>
-      <video
+        playsInline
+      ></video>`,
+        }}
+      />
+
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `<video
         className="hidden md:flex md:min-h-[600px] absolute top-0 left-0 w-full md:mt-[96px] object-cover z-[-1]"
         src={bienMichesDesktopBgVideo}
         autoPlay
         loop
         muted
-      ></video>
+        playsInline
+      ></video>`,
+        }}
+      />
     </>
   );
 }
