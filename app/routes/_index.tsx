@@ -205,6 +205,28 @@ function RecommendedProducts({
                     />
                   </Link>
                 ))}
+
+                <div className="hidden md:flex flex-col justify-end pb-[4.3rem]">
+                  <div className="rounded-lg border-primary border-2 border-solid pt-5 pb-9 px-4">
+                    <h2 className="text-sm lg:text-2xl text-center">
+                      Sign In for best expereince
+                    </h2>
+                    <div className="pt-3 md:pt-4">
+                      <Link
+                        className={cn(
+                          buttonVariants({
+                            size: 'sm',
+                            className:
+                              'bg-green-800 w-full hover:bg-green-700 text-center hover:no-underline',
+                          }),
+                        )}
+                        to="/account/login"
+                      >
+                        Sign in securely
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
             </MaxWidthWrapper>
           )}

@@ -40,6 +40,7 @@ import {cn} from '@/lib/utils';
 import {Button, buttonVariants} from '@/components/ui/button';
 import * as StorefrontAPI from '@shopify/hydrogen/storefront-api-types';
 import Slider from 'react-slick';
+import MaxWidthWrapper from '~/components/MaxWidthWrapper';
 
 export const meta: V2_MetaFunction = ({data}) => {
   return [{title: `Hydrogen | ${data.product.title}`}];
@@ -134,6 +135,7 @@ export default function Product() {
     const handleWindowResize = () => {
       setWindowSize([window.innerWidth, window.innerHeight]);
     };
+    setWindowSize([window.innerWidth, window.innerHeight]);
 
     window.addEventListener('resize', handleWindowResize);
 
@@ -143,7 +145,7 @@ export default function Product() {
   }, []);
 
   return (
-    <div className="product pt-3 pb-7 px-3.5 md:flex">
+    <MaxWidthWrapper className="block product pt-3 pb-7 px-3.5 md:flex">
       <ProductTite className="md:hidden" product={product} />
       <ProductImage
         image={selectedVariant?.image}
@@ -180,7 +182,7 @@ export default function Product() {
           </div>
         </div>
       </div>
-    </div>
+    </MaxWidthWrapper>
   );
 }
 

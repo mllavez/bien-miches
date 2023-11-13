@@ -131,14 +131,6 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta
-          name="facebook-domain-verification"
-          content="xxd0d4xi1z0mus0wrdqzrkjlhop48s"
-        />
-        <meta
-          name="facebook-domain-verification"
-          content="35kuqfedrurim5m2c6xm3m4wo066s8"
-        />
         <Meta />
         <Links />
         <Script
