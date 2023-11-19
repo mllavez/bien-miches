@@ -138,6 +138,12 @@ export default function App() {
           type="text/javascript"
           src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TdNuBs"
         ></Script>
+        <Script
+          async
+          src="https://analytics.eu.umami.is/script.js"
+          type="text/javascript"
+          data-website-id="738ae2f4-acb4-47dc-95b1-6fca4dee726f"
+        ></Script>
       </head>
       <body className="dark bg-background">
         <Layout {...data}>
@@ -170,14 +176,12 @@ export function ErrorBoundary() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta
-          name="facebook-domain-verification"
-          content="xxd0d4xi1z0mus0wrdqzrkjlhop48s"
-        />
-        <meta
-          name="facebook-domain-verification"
-          content="35kuqfedrurim5m2c6xm3m4wo066s8"
-        />
+        <Script
+          async
+          src="https://analytics.eu.umami.is/script.js"
+          type="text/javascript"
+          data-website-id="738ae2f4-acb4-47dc-95b1-6fca4dee726f"
+        ></Script>
         <Meta />
         <Links />
       </head>
