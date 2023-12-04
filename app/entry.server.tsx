@@ -22,6 +22,7 @@ export default async function handleRequest(
       'https://static.klaviyo.com', //✅
       'https://static-tracking.klaviyo.com',
       'https://fast.a.klaviyo.com',
+      'https://analytics.eu.umami.is',
     ],
     scriptSrc: [
       "'self'",
@@ -34,6 +35,7 @@ export default async function handleRequest(
       'https://monorail-edge.shopifysvc.com',
       'https://static-forms.klaviyo.com',
       'https://fast.a.klaviyo.com',
+      'https://analytics.eu.umami.is',
     ],
     styleSrc: [
       "'self'",
