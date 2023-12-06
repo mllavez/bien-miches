@@ -42,11 +42,7 @@ jobs:
         id: deploy
         uses: shopify/oxygenctl-action@v4
         with:
-<<<<<<< HEAD:.github/workflows/oxygen-deployment-1000007088.yml
           oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000007088 }}
-=======
-          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000009533 }}
->>>>>>> e4bdcec2c9355e0a378abd709f09b9a50115218c:.github/workflows/oxygen-deployment-1000009533.yml
           build_command: "npm run build"
 
       # Create GitHub Deployment
